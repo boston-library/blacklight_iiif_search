@@ -16,10 +16,11 @@ module BlacklightIiifSearch
       blacklight_config.iiif_search || {}
     end
 
+    def iiif_search_params
+      params.permit(:q, :motivation, :date, :user, :solr_document_id, :page)
+    end
+
     private
 
-    def iiif_search_params
-      params.permit(:q, :motivation, :date, :user, :solr_document_id)
-    end
   end
 end
