@@ -2,8 +2,9 @@ module BlacklightIiifSearch
   class IiifSearchResponse
     attr_reader :solr_response, :controller
 
-    def initialize(solr_response, controller, iiif_search_config)
+    def initialize(solr_response, parent_id, controller, iiif_search_config)
       @solr_response = solr_response
+      @parent_id = parent_id
       @controller = controller
       @iiif_config = iiif_search_config
     end
@@ -30,9 +31,15 @@ module BlacklightIiifSearch
       @total = 0
       solr_response['highlighting'].each do |id, hl_hash|
         hl_hash.values.each do |hl_array|
-          hl_array.each do |hl|
+          hl_array.each_with_index do |hl, hl_index|
             @total += 1
-            resources_array << IiifSearchAnnotation.new(id, hl).as_hash
+            resources_array << IiifSearchAnnotation.new(id,
+                                                        solr_response.params['q'],
+                                                        @total,
+                                                        hl_index,
+                                                        hl,
+                                                        controller,
+                                                        @parent_id).as_hash
           end
         end
       end

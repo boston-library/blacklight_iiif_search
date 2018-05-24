@@ -7,7 +7,10 @@ module BlacklightIiifSearch
       blacklight_config.search_builder_class = IiifSearchBuilder
       iiif_search = IiifSearch.new(iiif_search_params, iiif_search_config)
       (@response, @document_list) = search_results(iiif_search.solr_params)
-      iiif_search_response = IiifSearchResponse.new(@response, self, iiif_search_config)
+      iiif_search_response = IiifSearchResponse.new(@response,
+                                                    params[:solr_document_id],
+                                                    self,
+                                                    iiif_search_config)
       body = iiif_search_response.annotation_list
       render json: body, content_type: 'application/json'
     end
