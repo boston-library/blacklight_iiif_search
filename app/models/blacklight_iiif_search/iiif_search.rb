@@ -11,7 +11,7 @@ module BlacklightIiifSearch
       @page = params[:page]
       @iiif_config = iiif_search_config
       @rows = 50
-      #@start = start
+      # @start = start
 
       # NOT IMPLEMENTED YET
       # @motivation = params[:motivation]
