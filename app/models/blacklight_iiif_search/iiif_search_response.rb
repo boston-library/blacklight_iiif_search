@@ -1,3 +1,4 @@
+# corresponds to a IIIF Annotation List
 module BlacklightIiifSearch
   class IiifSearchResponse
     attr_reader :solr_response, :controller
@@ -30,14 +31,12 @@ module BlacklightIiifSearch
       resources_array = []
       @total = 0
       solr_response['highlighting'].each do |id, hl_hash|
-        hl_hash.values.each do |hl_array|
+        hl_hash.each_value do |hl_array|
           hl_array.each_with_index do |hl, hl_index|
             @total += 1
             resources_array << IiifSearchAnnotation.new(id,
                                                         solr_response.params['q'],
-                                                        @total,
-                                                        hl_index,
-                                                        hl,
+                                                        @total, hl_index, hl,
                                                         controller,
                                                         @parent_id).as_hash
           end
@@ -69,9 +68,8 @@ module BlacklightIiifSearch
     end
 
     def clean_params
-      remove = ignored.map { |v| v.to_sym }
-      controller.iiif_search_params.except(*[:page, :solr_document_id] + remove)
+      remove = ignored.map(&:to_sym)
+      controller.iiif_search_params.except(*%i[page solr_document_id] + remove)
     end
-
   end
 end

@@ -1,6 +1,6 @@
+# corresponds to IIIF Annotation resource
 module BlacklightIiifSearch
   class IiifSearchAnnotation
-
     include IIIF::Presentation
     include IiifSearchAnnotationBehavior
 
@@ -27,6 +27,5 @@ module BlacklightIiifSearch
       IIIF::Presentation::Resource.new('@type' => 'cnt:ContentAsText',
                                        'chars' => snippet.gsub(/<\/?em>/, ''))
     end
-
   end
 end

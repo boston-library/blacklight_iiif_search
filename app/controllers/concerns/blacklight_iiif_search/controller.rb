@@ -22,8 +22,5 @@ module BlacklightIiifSearch
     def iiif_search_params
       params.permit(:q, :motivation, :date, :user, :solr_document_id, :page)
     end
-
-    private
-
   end
 end

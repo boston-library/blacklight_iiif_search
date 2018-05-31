@@ -1,4 +1,7 @@
-inherit_from: .rubocop_todo.yml
+inherit_gem:
+  bixby: bixby_default.yml
+
+#inherit_from: .rubocop_todo.yml
 require: rubocop-rspec
 
 AllCops:
@@ -7,6 +10,9 @@ AllCops:
     - '**/Rakefile'
   Exclude:
     - '.internal_test_app/**/*'
+    - 'blacklight_iiif_search.gemspec'
+    - 'Gemfile'
+
 
 Rails:
   Enabled: true

@@ -1,6 +1,6 @@
+# IiifSearch
 module BlacklightIiifSearch
   class IiifSearch
-
     include IiifSearchBehavior
 
     attr_reader :id, :q, :page, :rows, :iiif_config
@@ -22,8 +22,7 @@ module BlacklightIiifSearch
     ##
     # return a hash of Solr search params
     def solr_params
-      {q: q, f: object_relation_solr_params, rows: rows, page: page}
+      { q: q, f: object_relation_solr_params, rows: rows, page: page }
     end
-
   end
 end

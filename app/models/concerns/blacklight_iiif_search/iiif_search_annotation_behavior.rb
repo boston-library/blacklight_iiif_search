@@ -1,3 +1,4 @@
+# customizable behavior for IiifSearchAnnotation
 module BlacklightIiifSearch
   module IiifSearchAnnotationBehavior
     def annotation_id
@@ -14,6 +15,5 @@ module BlacklightIiifSearch
     def coordinates
       ''
     end
-
   end
 end

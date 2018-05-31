@@ -1,9 +1,9 @@
+# SearchBuilder for full-text searches with highlighting and snippets
 class IiifSearchBuilder < Blacklight::SearchBuilder
-
   include Blacklight::Solr::SearchBuilderBehavior
 
   self.default_processor_chain += [
-      :ocr_search_params
+    :ocr_search_params
   ]
 
   # set params for ocr field searching
@@ -14,5 +14,4 @@ class IiifSearchBuilder < Blacklight::SearchBuilder
     solr_parameters[:'hl.fragsize'] = blacklight_config.iiif_search[:fragsize]
     solr_parameters[:'hl.snippets'] = blacklight_config.iiif_search[:snippets]
   end
-
 end
