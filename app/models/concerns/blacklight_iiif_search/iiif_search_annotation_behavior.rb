@@ -2,7 +2,7 @@
 module BlacklightIiifSearch
   module IiifSearchAnnotationBehavior
     def annotation_id
-      "#{controller.solr_document_url(parent_id)}/canvas/#{id}/annotation/#{index}"
+      "#{controller.solr_document_url(parent_id)}/canvas/#{id}/annotation/#{hl_index}"
     end
 
     def canvas_uri_for_annotation

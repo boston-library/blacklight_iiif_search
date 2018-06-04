@@ -29,12 +29,14 @@ Bundler::GemHelper.install_tasks
 #   t.verbose = false
 # end
 
-load 'tasks/blacklight_iiif_search.rake'
+Rake::Task.define_task(:environment)
+
+load 'lib/railties/blacklight_iiif_search.rake'
 
 task default: :ci
 
 require 'engine_cart/rake_task'
-EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
+# EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
 require 'solr_wrapper'
 

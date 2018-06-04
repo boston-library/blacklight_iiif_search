@@ -19,18 +19,18 @@ module BlacklightIiifSearch
         marker = 'include Blacklight::Catalog'
         insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
           "\n\n  # CatalogController-scope behavior and configuration for BlacklightIiifSearch
-  include BlacklightIiifSearch::Controller\n\n"
+  include BlacklightIiifSearch::Controller"
         end
         marker = 'configure_blacklight do |config|'
         insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
-          "\n    # configuration for Blacklight IIIF Content Search
+          "\n\n    # configuration for Blacklight IIIF Content Search
     config.iiif_search = {
-      full_text_field: 'all_text_timv',
-      object_relation_field: 'is_page_of_ssim',
+      full_text_field: 'text',
+      object_relation_field: 'is_page_of_s',
       fragsize: 100,
       snippets: 10,
       supported_params: %w[q page]
-    }\n\n"
+    }\n"
         end
       end
     end

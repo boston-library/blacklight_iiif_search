@@ -13,12 +13,12 @@ module BlacklightIiifSearch
       unless IO.read('config/routes.rb').include?('CommonwealthVlrEngine::Engine')
         marker = 'Rails.application.routes.draw do'
         insert_into_file 'config/routes.rb', after: marker do
-          "\n\n  concern :iiif_search, BlacklightIiifSearch::Routes.new\n\n"
+          "\n\n  concern :iiif_search, BlacklightIiifSearch::Routes.new"
         end
         # for blacklight_range_limit
-        bl_routes_marker = /resources :solr_documents[\S\s]*concerns :exportable.*$/
+        bl_routes_marker = /resources :solr_documents[\S\s]*controller: 'catalog' do[\s]*concerns :exportable.*$/
         inject_into_file 'config/routes.rb', after: bl_routes_marker do
-          "\n    concerns :iiif_search\n"
+          "\n    concerns :iiif_search"
         end
       end
     end

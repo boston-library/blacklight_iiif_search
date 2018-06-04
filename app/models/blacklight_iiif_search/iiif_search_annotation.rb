@@ -4,12 +4,11 @@ module BlacklightIiifSearch
     include IIIF::Presentation
     include IiifSearchAnnotationBehavior
 
-    attr_reader :id, :query, :index, :hl_index, :snippet, :controller, :parent_id
+    attr_reader :id, :query, :hl_index, :snippet, :controller, :parent_id
 
-    def initialize(id, query, index, hl_index, snippet, controller, parent_id)
+    def initialize(id, query, hl_index, snippet, controller, parent_id)
       @id = id
       @query = query
-      @index = index
       @hl_index = hl_index
       @snippet = snippet
       @controller = controller
@@ -18,7 +17,7 @@ module BlacklightIiifSearch
 
     def as_hash
       annotation = IIIF::Presentation::Annotation.new('@id' => annotation_id)
-      annotation.resource = text_resource_for_annotation(snippet)
+      annotation.resource = text_resource_for_annotation(snippet) if snippet
       annotation['on'] = canvas_uri_for_annotation
       annotation
     end
