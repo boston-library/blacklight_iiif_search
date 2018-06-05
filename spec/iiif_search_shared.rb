@@ -7,9 +7,8 @@ RSpec.shared_context 'iiif_search_shared' do
   let(:snippet) { 'assistance to the <em>teacher</em>, but every' }
   let(:controller) { CatalogController.new }
   let(:blacklight_config) { controller.blacklight_config }
-  let(:search_params) do { q: query_term,
-                           solr_document_id: parent_id,
-                           date: 'foo' }
+  let(:search_params) do
+    { q: query_term, solr_document_id: parent_id, date: 'foo' }
   end
   let(:iiif_search) do
     BlacklightIiifSearch::IiifSearch.new(search_params,
