@@ -10,14 +10,14 @@ RSpec.describe BlacklightIiifSearch::IiifSearchAnnotationBehavior do
 
   describe '#annotation_id' do
     subject { iiif_search_annotation.annotation_id }
-    it 'should return a properly formatted URL' do
+    it 'returns a properly formatted URL' do
       expect(subject).to include("#{parent_id}/canvas/#{page_id}/annotation/0")
     end
   end
 
   describe '#canvas_uri_for_annotation' do
     subject { iiif_search_annotation.canvas_uri_for_annotation }
-    it 'should return a properly formatted URL' do
+    it 'returns a properly formatted URL' do
       expect(subject).to include("#{parent_id}/canvas/#{page_id}")
     end
   end

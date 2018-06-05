@@ -7,27 +7,27 @@ RSpec.describe BlacklightIiifSearch::IiifSearchAnnotation do
   end
 
   describe 'class' do
-    it 'should be a IiifSearchAnnotation' do
+    it 'is a IiifSearchAnnotation' do
       expect(iiif_search_annotation.class).to eq(described_class)
     end
   end
 
   describe '#as_hash' do
     subject { iiif_search_annotation.as_hash }
-    it 'should return the correct object' do
+    it 'returns the correct object' do
       expect(subject.class).to eq(IIIF::Presentation::Annotation)
     end
-    it 'should have a text resource' do
+    it 'has a text resource' do
       expect(subject.resource.class).to eq(IIIF::Presentation::Resource)
     end
-    it 'should have an "on" property' do
+    it 'has an "on" property' do
       expect(subject['on']).not_to be_blank
     end
   end
 
   describe '#text_resource_for_annotation' do
     subject { iiif_search_annotation.text_resource_for_annotation }
-    it 'should return the correct object' do
+    it 'returns the correct object' do
       expect(subject.class).to eq(IIIF::Presentation::Resource)
       expect(subject['chars']).to include(query_term)
       expect(subject['chars']).not_to include('<em>')

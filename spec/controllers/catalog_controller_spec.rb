@@ -11,7 +11,7 @@ RSpec.describe CatalogController do
 
     describe '#iiif_search_config' do
       subject { controller.iiif_search_config }
-      it 'should return the iiif_search config' do
+      it 'returns the iiif_search config' do
         expect(subject[:full_text_field]).to_not be_falsey
         expect(subject[:object_relation_field]).to_not be_falsey
         expect(subject[:supported_params]).to_not be_empty
@@ -24,7 +24,7 @@ RSpec.describe CatalogController do
       end
 
       subject { controller.iiif_search_params }
-      it 'should only return the permitted params' do
+      it 'only returns the permitted params' do
         expect(subject.include?(:q)).to be_truthy
         expect(subject.include?(:foo)).to be_falsey
       end
@@ -40,11 +40,11 @@ RSpec.describe CatalogController do
       end
       let(:json) { JSON.parse(response.body) }
 
-      it 'should return a response' do
+      it 'returns a response' do
         expect(response).to be_success
       end
 
-      it 'should return a IIIF AnnotationList' do
+      it 'returns a IIIF AnnotationList' do
         expect(json['@type']).to eq('sc:AnnotationList')
         expect(json['resources']).not_to be_blank
         expect(json['within']).not_to be_blank
