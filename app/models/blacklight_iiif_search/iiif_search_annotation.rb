@@ -17,12 +17,12 @@ module BlacklightIiifSearch
 
     def as_hash
       annotation = IIIF::Presentation::Annotation.new('@id' => annotation_id)
-      annotation.resource = text_resource_for_annotation(snippet) if snippet
+      annotation.resource = text_resource_for_annotation if snippet
       annotation['on'] = canvas_uri_for_annotation
       annotation
     end
 
-    def text_resource_for_annotation(snippet)
+    def text_resource_for_annotation
       IIIF::Presentation::Resource.new('@type' => 'cnt:ContentAsText',
                                        'chars' => snippet.gsub(/<\/?em>/, ''))
     end

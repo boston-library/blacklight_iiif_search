@@ -47,7 +47,7 @@ require 'rubocop/rake_task'
 RuboCop::RakeTask.new(:rubocop)
 
 desc 'Run test suite'
-task ci: ['engine_cart:generate'] do # TODO add rubocop
+task ci: ['engine_cart:generate'] do # TODO: add rubocop
   SolrWrapper.wrap do |solr|
     solr.with_collection do
       within_test_app do

@@ -76,6 +76,7 @@ module BlacklightIiifSearch
       controller.solr_document_iiif_search_url(clean_params.merge(page: page_index))
     end
 
+    # returns ActionController::Parameters
     def clean_params
       remove = ignored.map(&:to_sym)
       controller.iiif_search_params.except(*%i[page solr_document_id] + remove)

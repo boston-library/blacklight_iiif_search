@@ -1,9 +1,6 @@
+require 'iiif_search_shared'
 RSpec.describe BlacklightIiifSearch::IiifSearch do
-  let(:blacklight_config) { CatalogController.blacklight_config }
-  let(:iiif_search) do
-    described_class.new({ q: 'foo', solr_document_id: 'bar' },
-                        blacklight_config.iiif_search)
-  end
+  include_context 'iiif_search_shared'
 
   describe 'class' do
     it 'should be a IiifSearch' do
@@ -18,7 +15,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearch do
 
     it 'should return a hash of parameters' do
       solr_params = iiif_search.solr_params
-      expect(solr_params[:q]).to eq('foo')
+      expect(solr_params[:q]).to eq(query_term)
       expect(solr_params[:rows]).to eq(iiif_search.rows)
       expect(solr_params[:f]).not_to be_nil
     end
