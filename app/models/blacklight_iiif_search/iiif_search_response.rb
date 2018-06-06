@@ -18,6 +18,7 @@ module BlacklightIiifSearch
       ]
       anno_list['resources'] = resources
       anno_list['within'] = within
+      anno_list['prev'] = paged_url(solr_response.prev_page) if solr_response.prev_page
       anno_list['next'] = paged_url(solr_response.next_page) if solr_response.next_page
       anno_list['startIndex'] = 0 unless solr_response.total_pages > 1
       anno_list.to_ordered_hash(force: true, include_context: false)
