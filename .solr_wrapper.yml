@@ -1,0 +1,7 @@
+# Place any default configuration for solr_wrapper here
+# you must first run 'rake engine_cart:generate' to create the test app
+# before running 'solr_wrapper' from project root
+# port: 8983
+collection:
+  dir: ./.internal_test_app/solr/conf/
+  name: blacklight-core

@@ -92,25 +92,25 @@ After cloning the repository, and running `bundle install`, run `rake ci` from t
 
 **Various useful development commands:**
 
-Start up Solr (run from `.internal_test_app`):
+Create the internal test app:
 ```
-$ solr_wrapper --config ./.solr_wrapper.yml
+$ rake engine_cart:generate
 ```
-Clean out Solr (run from `.internal_test_app`):
+Remove the internal test app:
+```
+$ rake engine_cart:clean
+```
+Start up Solr:
+```
+$ solr_wrapper
+```
+Clean out Solr:
 ```
 $ solr_wrapper clean
 ```
 Index sample documents into Solr (run from `.internal_test_app`):
 ```
 $ RAILS_ENV=test rake blacklight_iiif_search:index:seed
-```
-Create the internal test app (run from project root):
-```
-$ rake engine_cart:generate
-```
-Remove the internal test app (run from project root):
-```
-$ rake engine_cart:clean
 ```
 
 ## Credits
