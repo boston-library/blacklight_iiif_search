@@ -49,7 +49,7 @@
   timestamp:
   - '2015-11-18T21:09:44.574Z'
 - object_model_s:
-  - Volume
+  - Book
   id:
   - 3j334603p
   label_s:
@@ -74,12 +74,8 @@
   - 3j334628j
   is_file_of_s:
   - 3j334603p
-#  is_following_page_of_s:
-#  - 3j3346278
   is_page_of_s:
   - 3j334603p
-#  is_preceding_page_of_s:
-#  - 3j334629t
   page_type_s:
   - Normal
   hand_side_s:
@@ -95,7 +91,7 @@
   timestamp:
   - '2015-11-18T17:27:35.361Z'
 - object_model_s:
-  - Volume
+  - Book
   id:
   - rf55z9490
   label_s:
@@ -120,12 +116,8 @@
   - rf55z9732
   is_file_of_s:
   - rf55z9490
-#  is_following_page_of_s:
-#  - rf55z972s
   is_page_of_s:
   - rf55z9490
-#  is_preceding_page_of_s:
-#  - rf55z974b
   page_type_s:
   - Normal
   hand_side_s:

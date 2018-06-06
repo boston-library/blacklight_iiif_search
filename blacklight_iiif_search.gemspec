@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://projectblacklight.org/'
   s.summary     = 'Blacklight IIIF Search plugin'
   s.description = 'Blacklight IIIF Search plugin'
-  s.license     = 'MIT'
+  s.license     = 'Apache-2.0'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['spec/**/*']

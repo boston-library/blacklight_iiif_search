@@ -63,7 +63,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
   # missing :solr_document_id only seems to be an issue with the spec
   describe '#paged_url' do
     it 'returns a solr_document URL with the page param'
-      # expect(iiif_search_response.paged_url(100)).to include('page=100')
+    # expect(iiif_search_response.paged_url(100)).to include('page=100')
   end
 
   describe '#within' do

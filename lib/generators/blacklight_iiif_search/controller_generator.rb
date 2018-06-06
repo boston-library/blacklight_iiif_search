@@ -27,8 +27,6 @@ module BlacklightIiifSearch
     config.iiif_search = {
       full_text_field: 'text',
       object_relation_field: 'is_page_of_s',
-      fragsize: 100,
-      snippets: 10,
       supported_params: %w[q page]
     }\n"
         end
