@@ -12,6 +12,7 @@ module BlacklightIiifSearch
                                                     self,
                                                     iiif_search_config)
       body = iiif_search_response.annotation_list
+      response.headers['Access-Control-Allow-Origin'] = '*'
       render json: body, content_type: 'application/json'
     end
 
@@ -22,5 +23,6 @@ module BlacklightIiifSearch
     def iiif_search_params
       params.permit(:q, :motivation, :date, :user, :solr_document_id, :page)
     end
+
   end
 end
