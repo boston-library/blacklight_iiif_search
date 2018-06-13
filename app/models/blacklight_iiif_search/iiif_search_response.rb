@@ -8,6 +8,8 @@ module BlacklightIiifSearch
       @parent_id = parent_id
       @controller = controller
       @iiif_config = iiif_search_config
+      @resources = []
+      @hits = []
     end
 
     def annotation_list
@@ -17,6 +19,7 @@ module BlacklightIiifSearch
         http://iiif.io/api/search/1/context.json
       ]
       anno_list['resources'] = resources
+      anno_list['hits'] = @hits
       anno_list['within'] = within
       anno_list['prev'] = paged_url(solr_response.prev_page) if solr_response.prev_page
       anno_list['next'] = paged_url(solr_response.next_page) if solr_response.next_page
@@ -29,30 +32,31 @@ module BlacklightIiifSearch
     end
 
     def resources
-      resources_array = []
       @total = 0
       solr_response['highlighting'].each do |id, hl_hash|
+        hit = { '@type': 'search:Hit', 'annotations': [] }
         if hl_hash.empty?
           @total += 1
-          resources_array << IiifSearchAnnotation.new(id,
-                                                      solr_response.params['q'],
-                                                      0, nil,
-                                                      controller,
-                                                      @parent_id).as_hash
+          annotation = IiifSearchAnnotation.new(id, solr_response.params['q'],
+                                                0, nil, controller, @parent_id)
+          @resources << annotation.as_hash
+          hit[:annotations] << annotation.annotation_id
         else
           hl_hash.each_value do |hl_array|
             hl_array.each_with_index do |hl, hl_index|
               @total += 1
-              resources_array << IiifSearchAnnotation.new(id,
-                                                          solr_response.params['q'],
-                                                          hl_index, hl,
-                                                          controller,
-                                                          @parent_id).as_hash
+              annotation = IiifSearchAnnotation.new(id,
+                                                    solr_response.params['q'],
+                                                    hl_index, hl, controller,
+                                                    @parent_id)
+              @resources << annotation.as_hash
+              hit[:annotations] << annotation.annotation_id
             end
           end
         end
+        @hits << hit
       end
-      resources_array
+      @resources
     end
 
     def within
