@@ -11,10 +11,9 @@ module BlacklightIiifSearch
     desc 'Install generator for Blacklight IIIF Search'
 
     def verify_blacklight_installed
-      unless IO.read('app/controllers/application_controller.rb').include?('include Blacklight::Controller')
-        say_status('info', 'BLACKLIGHT NOT INSTALLED; GENERATING BLACKLIGHT', :blue)
-        generate 'blacklight:install'
-      end
+      return if IO.read('app/controllers/application_controller.rb').include?('include Blacklight::Controller')
+      say_status('info', 'BLACKLIGHT NOT INSTALLED; GENERATING BLACKLIGHT', :blue)
+      generate 'blacklight:install'
     end
 
     def insert_to_controllers

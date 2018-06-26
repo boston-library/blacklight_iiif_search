@@ -6,7 +6,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
     controller.search_results(iiif_search.solr_params).first
   end
   let(:iiif_search_response) do
-    described_class.new(solr_response, parent_id,
+    described_class.new(solr_response, parent_document,
                         controller, blacklight_config.iiif_search)
   end
 
@@ -18,13 +18,23 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
 
   describe '#annotation_list' do
     subject { iiif_search_response.annotation_list }
+
     it 'returns an OrderedHash' do
       expect(subject.class).to eq(IIIF::OrderedHash)
     end
+
     it 'has the correct content' do
       expect(subject['@type']).to eq('sc:AnnotationList')
       expect(subject['resources']).not_to be_blank
       expect(subject['within']).not_to be_blank
+      expect(subject['hits']).not_to be_blank
+    end
+
+    let(:hit) { subject['hits'].first }
+    it 'has properly formatted search:Hit' do
+      puts "HIT = #{hit}"
+      expect(hit[:@type]).to eq('search:Hit')
+      expect(hit[:annotations].first).to eq(subject['resources'].first['@id'])
     end
   end
 

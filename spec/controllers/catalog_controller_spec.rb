@@ -48,6 +48,7 @@ RSpec.describe CatalogController do
         expect(json['@type']).to eq('sc:AnnotationList')
         expect(json['resources']).not_to be_blank
         expect(json['within']).not_to be_blank
+        expect(json['hits']).not_to be_blank
       end
     end
   end

@@ -3,7 +3,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearchAnnotation do
   include_context 'iiif_search_shared'
 
   let(:iiif_search_annotation) do
-    described_class.new(page_id, query_term, 0, snippet, controller, parent_id)
+    described_class.new(page_document, query_term, 0, snippet, controller, parent_document)
   end
 
   describe 'class' do

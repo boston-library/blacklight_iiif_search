@@ -5,7 +5,7 @@ module BlacklightIiifSearch
   class ModelGenerator < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
 
-    argument :search_builder_model, :type => :string, :default => 'search_builder'
+    argument :search_builder_model, type: :string, default: 'search_builder'
 
     desc 'This generator makes the following changes to your app:
         1. Adds iiif_search_builder.rb to app/models'

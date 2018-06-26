@@ -15,21 +15,20 @@ module BlacklightIiifSearch
 
     # Update the blacklight catalog controller
     def inject_catalog_controller_behavior
-      unless IO.read("app/controllers/#{controller_name}_controller.rb").include?('BlacklightIiifSearch')
-        marker = 'include Blacklight::Catalog'
-        insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
-          "\n\n  # CatalogController-scope behavior and configuration for BlacklightIiifSearch
-  include BlacklightIiifSearch::Controller"
-        end
-        marker = 'configure_blacklight do |config|'
-        insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
-          "\n\n    # configuration for Blacklight IIIF Content Search
-    config.iiif_search = {
-      full_text_field: 'text',
-      object_relation_field: 'is_page_of_s',
-      supported_params: %w[q page]
-    }\n"
-        end
+      return if IO.read("app/controllers/#{controller_name}_controller.rb").include?('BlacklightIiifSearch')
+      marker = 'include Blacklight::Catalog'
+      insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
+        "\n\n  # CatalogController-scope behavior and configuration for BlacklightIiifSearch
+include BlacklightIiifSearch::Controller"
+      end
+      marker = 'configure_blacklight do |config|'
+      insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
+        "\n\n    # configuration for Blacklight IIIF Content Search
+  config.iiif_search = {
+    full_text_field: 'text',
+    object_relation_field: 'is_page_of_s',
+    supported_params: %w[q page]
+  }\n"
       end
     end
   end

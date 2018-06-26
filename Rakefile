@@ -13,21 +13,7 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-# APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
-# load 'rails/tasks/engine.rake'
-
-# load 'rails/tasks/statistics.rake'
-
 Bundler::GemHelper.install_tasks
-
-# require 'rake/testtask'
-
-# Rake::TestTask.new(:test) do |t|
-#   t.libs << 'lib'
-#   t.libs << 'test'
-#   t.pattern = 'test/**/*_test.rb'
-#   t.verbose = false
-# end
 
 Rake::Task.define_task(:environment)
 
@@ -36,7 +22,6 @@ load 'lib/railties/blacklight_iiif_search.rake'
 task default: :ci
 
 require 'engine_cart/rake_task'
-# EngineCart.fingerprint_proc = EngineCart.rails_fingerprint_proc
 
 require 'solr_wrapper'
 

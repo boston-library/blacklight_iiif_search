@@ -4,10 +4,10 @@ module BlacklightIiifSearch
     include IIIF::Presentation
     include IiifSearchAnnotationBehavior
 
-    attr_reader :id, :query, :hl_index, :snippet, :controller, :parent_document
+    attr_reader :document, :query, :hl_index, :snippet, :controller, :parent_document
 
-    def initialize(id, query, hl_index, snippet, controller, parent_document)
-      @id = id
+    def initialize(document, query, hl_index, snippet, controller, parent_document)
+      @document = document
       @query = query
       @hl_index = hl_index
       @snippet = snippet

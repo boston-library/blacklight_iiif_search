@@ -3,15 +3,15 @@ module BlacklightIiifSearch
   class IiifSearch
     include IiifSearchBehavior
 
-    attr_reader :id, :q, :page, :rows, :iiif_config
+    attr_reader :id, :iiif_config, :parent_document, :q, :page, :rows
 
-    def initialize(params, iiif_search_config)
+    def initialize(params, iiif_search_config, parent_document)
       @id = params[:solr_document_id]
+      @iiif_config = iiif_search_config
+      @parent_document = parent_document
       @q = params[:q]
       @page = params[:page]
-      @iiif_config = iiif_search_config
       @rows = 50
-      # @start = start
 
       # NOT IMPLEMENTED YET
       # @motivation = params[:motivation]
@@ -21,7 +21,10 @@ module BlacklightIiifSearch
 
     ##
     # return a hash of Solr search params
+    # if q is not supplied, have to pass some dummy params
+    # or else all records matching object_relation_solr_params are returned
     def solr_params
+      return { q: 'nil:nil' } unless q
       { q: q, f: object_relation_solr_params, rows: rows, page: page }
     end
   end
