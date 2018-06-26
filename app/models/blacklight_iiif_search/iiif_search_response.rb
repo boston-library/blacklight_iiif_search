@@ -3,9 +3,9 @@ module BlacklightIiifSearch
   class IiifSearchResponse
     attr_reader :solr_response, :controller
 
-    def initialize(solr_response, parent_id, controller, iiif_search_config)
+    def initialize(solr_response, parent_document, controller, iiif_search_config)
       @solr_response = solr_response
-      @parent_id = parent_id
+      @parent_document = parent_document
       @controller = controller
       @iiif_config = iiif_search_config
       @resources = []
@@ -38,7 +38,7 @@ module BlacklightIiifSearch
         if hl_hash.empty?
           @total += 1
           annotation = IiifSearchAnnotation.new(id, solr_response.params['q'],
-                                                0, nil, controller, @parent_id)
+                                                0, nil, controller, @parent_document)
           @resources << annotation.as_hash
           hit[:annotations] << annotation.annotation_id
         else
@@ -48,7 +48,7 @@ module BlacklightIiifSearch
               annotation = IiifSearchAnnotation.new(id,
                                                     solr_response.params['q'],
                                                     hl_index, hl, controller,
-                                                    @parent_id)
+                                                    @parent_document)
               @resources << annotation.as_hash
               hit[:annotations] << annotation.annotation_id
             end

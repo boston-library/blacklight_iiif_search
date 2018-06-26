@@ -6,9 +6,10 @@ module BlacklightIiifSearch
     def iiif_search
       blacklight_config.search_builder_class = IiifSearchBuilder
       iiif_search = IiifSearch.new(iiif_search_params, iiif_search_config)
+      (_parent_response, @parent_document) = fetch(params[:solr_document_id])
       (@response, @document_list) = search_results(iiif_search.solr_params)
       iiif_search_response = IiifSearchResponse.new(@response,
-                                                    params[:solr_document_id],
+                                                    @parent_document,
                                                     self,
                                                     iiif_search_config)
       body = iiif_search_response.annotation_list
