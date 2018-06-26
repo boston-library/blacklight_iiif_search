@@ -23,8 +23,9 @@ module BlacklightIiifSearch
     end
 
     def text_resource_for_annotation
+      clean_snippet =  ActionView::Base.full_sanitizer.sanitize(snippet)
       IIIF::Presentation::Resource.new('@type' => 'cnt:ContentAsText',
-                                       'chars' => snippet.gsub(/<\/?em>/, ''))
+                                       'chars' => clean_snippet)
     end
   end
 end
