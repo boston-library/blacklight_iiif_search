@@ -29,13 +29,18 @@ Add Blacklight IIIF Search to your `Gemfile`:
 gem 'blacklight_iiif_search'
 ```
 
-Run the install generator which will copy over some initial templates, routes, and configuration:
+Run the install generator, which will copy over some initial templates, routes, and configuration:
 
 ```bash
 $ rails generate blacklight_iiif_search:install
 ```
 
-After install, you'll probably need to adjust the `iiif_search` configuration settings in your app's `CatalogController`:
+The generator:
+* Adds some configuration settings to `app/controller/catalog_controller.rb`
+* Adds the `IiifSearchBuilder` class to `app/models`
+* Adds routing to `config/routes.rb`
+
+After install, you'll probably need to adjust the `iiif_search` settings in `CatalogController`:
 
 Config option | Description 
 ------------------------ | -------------------------------------------------------------
