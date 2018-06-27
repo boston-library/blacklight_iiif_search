@@ -8,6 +8,9 @@ When installed, the plugin provides an endpoint in your app that will return a J
 
 By integrating the URL for this service into your IIIF Presentation manifests, clients/viewers that support the IIIF Content Search API (such as the [Universal Viewer](https://universalviewer.io/)) will be able to provide functionality for searching within a resource and displaying results.
 
+> :warning:
+> This project is under active development, and still in the "alpha" phase. Feedback/comments welcome!
+
 ## Prerequisites
 
 Currently highly opinionated towards Solr as the back-end search index.
