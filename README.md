@@ -24,6 +24,12 @@ This plugin assumes:
     * if search term highlighting is desired, the text field must be indexed and stored
 5. The relationship between page records and their parent book/volume/issue/etc records is indexed in Solr
 
+Blacklight Version Compatibility:
+
+blacklight_iiif_search version | works with Blacklight
+----------------------- | ---------------------
+0.0.1-alpha | >= 6.3.0 to < 7.* 
+
 ## Installation
 
 Add Blacklight IIIF Search to your `Gemfile`:
@@ -110,6 +116,30 @@ The value of `@id` should be replaced with the link to the search service for th
 
 _Important note_: Although the current version (as of June 2018) of the Content Search API is `http://iiif.io/api/search/1.0`, the Universal Viewer will NOT automatically recognize the search service unless the `@context` and `profile` URIs use `http://iiif.io/api/search/0/` as the base.
 
+## Test Drive
+
+After cloning the repository, and running `bundle install`:
+1. Generate the test application at `.internal_test_app`:
+```
+$ rake engine_cart:generate
+```
+2. Start up Solr (run from a new terminal window):
+```
+$ solr_wrapper
+```
+3. Index sample documents into Solr (run from `./.internal_test_app`):
+```
+$ RAILS_ENV=test rake blacklight_iiif_search:index:seed
+```
+4. Start up the Rails server (run from `./.internal_test_app`):
+```
+$ rails s
+```
+5. In a browser, go to: `http://127.0.0.1:3000`
+6. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=denim`
+
+To see how search snippets work, change the value of the `full_text_field` config to `isbn_t` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
+
 ## Development
 
 After cloning the repository, and running `bundle install`, run `rake ci` from the project's root directory, which will:
@@ -145,3 +175,5 @@ $ RAILS_ENV=test rake blacklight_iiif_search:index:seed
 ## Credits
 
 This project was developed as part of the [Newspapers in Samvera](https://www.imls.gov/grants/awarded/lg-70-17-0043-17) grant. Thanks to the Institute of Museum and Library Services for their support.
+
+Inspiration for this code was drawn from Stanford University Digital Library's [content_search](https://github.com/sul-dlss/content_search) and NCSU Libraries' [ocracoke](https://github.com/NCSU-Libraries/ocracoke).
