@@ -8,7 +8,17 @@ module BlacklightIiifSearch
     argument :search_builder_name, type: :string, default: 'search_builder'
     argument :controller_name, type: :string, default: 'catalog'
 
-    desc 'Install generator for Blacklight IIIF Search'
+    class_option :'skip-solr', type: :boolean, default: false, desc: 'Skip generating solr configurations.'
+
+    desc <<-EOS
+      Install generator for Blacklight IIIF Search
+      This generator makes the following changes to your application:
+       1. Injects behavior into CatalogController
+       2. Adds a SearchBuilder to ./app/models
+       3. Adds BlacklightIiifSearch routes to ./config/routes.rb
+       4. Modifies solrconfig.xml to support contextual autocomplete functionality
+      Thanks for installing Blacklight IIIF Search!
+    EOS
 
     def verify_blacklight_installed
       return if IO.read('app/controllers/application_controller.rb').include?('include Blacklight::Controller')
@@ -26,6 +36,10 @@ module BlacklightIiifSearch
 
     def insert_to_routes
       generate 'blacklight_iiif_search:routes'
+    end
+
+    def add_solr_config
+      generate 'blacklight_iiif_search:solr' unless options[:'skip-solr']
     end
 
     def bundle_install

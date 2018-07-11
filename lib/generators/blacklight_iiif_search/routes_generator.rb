@@ -10,7 +10,7 @@ module BlacklightIiifSearch
 
     # Add CommonwealthVlrEngine to the routes
     def inject_iiif_search_routes
-      unless IO.read('config/routes.rb').include?('CommonwealthVlrEngine::Engine')
+      unless IO.read('config/routes.rb').include?('BlacklightIiifSearch::Routes')
         marker = 'Rails.application.routes.draw do'
         insert_into_file 'config/routes.rb', after: marker do
           "\n\n  concern :iiif_search, BlacklightIiifSearch::Routes.new"
