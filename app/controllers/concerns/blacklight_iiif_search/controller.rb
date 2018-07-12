@@ -19,8 +19,6 @@ module BlacklightIiifSearch
 
     def iiif_suggest
       suggest_search = IiifSuggestSearch.new(params, repository, self)
-      #suggest_resp = IiifSuggestResponse.new(suggest_search.suggest_results,
-      #                                       self)
       response.headers['Access-Control-Allow-Origin'] = '*'
       render json: suggest_search.response,
              content_type: 'application/json'

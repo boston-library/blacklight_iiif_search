@@ -27,7 +27,7 @@ module BlacklightIiifSearch
     def terms
       terms_for_list = []
       terms_array = solr_response.try(:[], 'suggest').try(:[], iiif_config[:suggester_name]).try(:[], query).try(:[], 'suggestions') || []
-      terms = terms_array.map{ |v| v['term'] }
+      terms = terms_array.map { |v| v['term'] }
       terms.sort.each do |term|
         term_hash = { match: term, url: iiif_search_url(term) }
         terms_for_list << term_hash
@@ -36,8 +36,7 @@ module BlacklightIiifSearch
     end
 
     def iiif_search_url(term)
-      controller.solr_document_iiif_search_url(document_id, {q: term})
+      controller.solr_document_iiif_search_url(document_id, q: term)
     end
-
   end
 end

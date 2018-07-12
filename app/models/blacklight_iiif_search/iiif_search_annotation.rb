@@ -4,7 +4,8 @@ module BlacklightIiifSearch
     include IIIF::Presentation
     include BlacklightIiifSearch::AnnotationBehavior
 
-    attr_reader :document, :query, :hl_index, :snippet, :controller, :parent_document
+    attr_reader :document, :query, :hl_index, :snippet, :controller,
+                :parent_document
 
     def initialize(document, query, hl_index, snippet, controller, parent_document)
       @document = document
@@ -23,7 +24,7 @@ module BlacklightIiifSearch
     end
 
     def text_resource_for_annotation
-      clean_snippet =  ActionView::Base.full_sanitizer.sanitize(snippet)
+      clean_snippet = ActionView::Base.full_sanitizer.sanitize(snippet)
       IIIF::Presentation::Resource.new('@type' => 'cnt:ContentAsText',
                                        'chars' => clean_snippet)
     end

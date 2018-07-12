@@ -12,10 +12,24 @@ RSpec.shared_context 'iiif_search_shared' do
   end
   let(:parent_document) { controller.fetch(parent_id)[1] }
   let(:page_document) { controller.fetch(page_id)[1] }
+  let(:repository) { Blacklight::Solr::Repository.new(blacklight_config) }
+
   let(:iiif_search) do
     BlacklightIiifSearch::IiifSearch.new(search_params,
                                          blacklight_config.iiif_search,
                                          parent_document)
+  end
+
+  let(:iiif_suggest_search) do
+    BlacklightIiifSearch::IiifSuggestSearch.new(search_params,
+                                                repository,
+                                                controller)
+  end
+
+  let(:iiif_suggest_response) do
+    BlacklightIiifSearch::IiifSuggestResponse.new(iiif_suggest_search.suggest_results,
+                                                  search_params,
+                                                  controller)
   end
 
   before do

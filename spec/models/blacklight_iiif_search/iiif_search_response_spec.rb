@@ -33,7 +33,6 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
 
     let(:hit) { subject['hits'].first }
     it 'has properly formatted search:Hit' do
-      puts "HIT = #{hit}"
       expect(hit[:@type]).to eq('search:Hit')
       expect(hit[:annotations].first).to eq(subject['resources'].first['@id'])
     end

@@ -1,8 +1,8 @@
 # IiifSuggestSearch
 module BlacklightIiifSearch
   class IiifSuggestSearch
-
-    attr_reader :params, :query, :document_id, :iiif_config, :repository, :controller
+    attr_reader :params, :query, :document_id, :iiif_config, :repository,
+                :controller
 
     ##
     # @param [Hash] params
@@ -30,6 +30,5 @@ module BlacklightIiifSearch
       repository.connection.send_and_receive(iiif_config[:autocomplete_path],
                                              params: suggest_params)
     end
-
   end
 end
