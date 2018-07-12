@@ -1,5 +1,5 @@
 require 'iiif_search_shared'
-RSpec.describe BlacklightIiifSearch::IiifSearchBehavior do
+RSpec.describe BlacklightIiifSearch::SearchBehavior do
   include_context 'iiif_search_shared'
 
   describe '#object_relation_solr_params' do

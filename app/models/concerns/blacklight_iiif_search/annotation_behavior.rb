@@ -1,6 +1,6 @@
 # customizable behavior for IiifSearchAnnotation
 module BlacklightIiifSearch
-  module IiifSearchAnnotationBehavior
+  module AnnotationBehavior
     def annotation_id
       "#{controller.solr_document_url(parent_document[:id])}/canvas/#{document[:id]}/annotation/#{hl_index}"
     end

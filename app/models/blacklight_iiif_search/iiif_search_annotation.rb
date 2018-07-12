@@ -2,7 +2,7 @@
 module BlacklightIiifSearch
   class IiifSearchAnnotation
     include IIIF::Presentation
-    include IiifSearchAnnotationBehavior
+    include BlacklightIiifSearch::AnnotationBehavior
 
     attr_reader :document, :query, :hl_index, :snippet, :controller, :parent_document
 

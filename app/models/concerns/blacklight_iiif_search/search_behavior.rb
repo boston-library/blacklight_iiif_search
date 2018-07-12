@@ -1,6 +1,6 @@
 # customizable behavior for IiifSearch
 module BlacklightIiifSearch
-  module IiifSearchBehavior
+  module SearchBehavior
     ##
     # limit the search to items that have some relationship
     # with the parent object (e.g. pages)

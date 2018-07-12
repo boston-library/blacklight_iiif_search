@@ -1,7 +1,7 @@
 # IiifSearch
 module BlacklightIiifSearch
   class IiifSearch
-    include IiifSearchBehavior
+    include BlacklightIiifSearch::SearchBehavior
 
     attr_reader :id, :iiif_config, :parent_document, :q, :page, :rows
 

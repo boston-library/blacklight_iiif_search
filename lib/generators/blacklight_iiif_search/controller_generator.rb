@@ -24,11 +24,13 @@ include BlacklightIiifSearch::Controller"
       marker = 'configure_blacklight do |config|'
       insert_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
         "\n\n    # configuration for Blacklight IIIF Content Search
-  config.iiif_search = {
-    full_text_field: 'text',
-    object_relation_field: 'is_page_of_s',
-    supported_params: %w[q page]
-  }\n"
+    config.iiif_search = {
+      full_text_field: 'text',
+      object_relation_field: 'is_page_of_s',
+      supported_params: %w[q page],
+      autocomplete_path: 'iiif_suggest',
+      suggester_name: 'iiifSuggester'
+    }\n"
       end
     end
   end

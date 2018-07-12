@@ -1,6 +1,6 @@
 RSpec.describe CatalogController do
   let(:controller) { described_class.new }
-  let(:query_term) { 'teacher' }
+  let(:query_term) { 'bird' }
 
   describe 'controller methods' do
     describe '#iiif_search' do

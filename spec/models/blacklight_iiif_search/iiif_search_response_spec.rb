@@ -24,6 +24,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
     end
 
     it 'has the correct content' do
+      expect(subject['@id']).not_to be_falsey
       expect(subject['@type']).to eq('sc:AnnotationList')
       expect(subject['resources']).not_to be_blank
       expect(subject['within']).not_to be_blank
@@ -38,23 +39,11 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
     end
   end
 
-  describe '#anno_list_id' do
-    it 'returns a URL-ish string' do
-      expect(iiif_search_response.anno_list_id).not_to be_falsey
-    end
-  end
-
   describe '#resources' do
     subject { iiif_search_response.resources }
     it 'returns an array of IiifSearchAnnotation objects' do
       expect(subject.length).to eq(2)
       expect(subject.first.class).to eq(IIIF::Presentation::Annotation)
-    end
-  end
-
-  describe '#ignored' do
-    it 'returns an array of ignored parameters' do
-      expect(iiif_search_response.ignored).to include('date')
     end
   end
 

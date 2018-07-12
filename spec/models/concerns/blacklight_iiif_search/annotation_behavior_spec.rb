@@ -1,5 +1,5 @@
 require 'iiif_search_shared'
-RSpec.describe BlacklightIiifSearch::IiifSearchAnnotationBehavior do
+RSpec.describe BlacklightIiifSearch::AnnotationBehavior do
   include_context 'iiif_search_shared'
 
   let(:iiif_search_annotation) do

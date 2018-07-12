@@ -1,7 +1,9 @@
 # corresponds to a IIIF Annotation List
 module BlacklightIiifSearch
   class IiifSearchResponse
-    attr_reader :solr_response, :controller
+    include BlacklightIiifSearch::Ignored
+
+    attr_reader :solr_response, :controller, :iiif_config
 
     def initialize(solr_response, parent_document, controller, iiif_search_config)
       @solr_response = solr_response
@@ -13,7 +15,8 @@ module BlacklightIiifSearch
     end
 
     def annotation_list
-      anno_list = IIIF::Presentation::AnnotationList.new('@id' => anno_list_id)
+      list_id = controller.request.original_url
+      anno_list = IIIF::Presentation::AnnotationList.new('@id' => list_id)
       anno_list['@context'] = %w[
         http://iiif.io/api/presentation/2/context.json
         http://iiif.io/api/search/1/context.json
@@ -25,10 +28,6 @@ module BlacklightIiifSearch
       anno_list['next'] = paged_url(solr_response.next_page) if solr_response.next_page
       anno_list['startIndex'] = 0 unless solr_response.total_pages > 1
       anno_list.to_ordered_hash(force: true, include_context: false)
-    end
-
-    def anno_list_id
-      controller.request.original_url
     end
 
     def resources
@@ -72,12 +71,6 @@ module BlacklightIiifSearch
         within_hash['total'] = @total
       end
       within_hash
-    end
-
-    def ignored
-      relevant_keys = controller.iiif_search_params.keys
-      relevant_keys.delete('solr_document_id')
-      relevant_keys - @iiif_config[:supported_params]
     end
 
     def paged_url(page_index)
