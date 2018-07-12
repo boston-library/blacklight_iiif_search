@@ -1,4 +1,4 @@
-# adds iiif_suggest SuggestComponent to solrconfig.xml
+# adds iiif_suggest configuration to Solr solrconfig.xml and schema.xml
 # to allow for suggestions limited by a contextField
 require 'rails/generators'
 
@@ -6,13 +6,9 @@ module BlacklightIiifSearch
   class SolrGenerator < Rails::Generators::Base
     source_root ::File.expand_path('../templates', __FILE__)
 
-    desc 'Adds iiif_suggest SuggestComponent to solrconfig.xml'
+    desc 'Adds iiif_suggest configuration to Solr solrconfig.xml and schema.xml'
 
-    #def copy_solr_conf
-    #  directory 'solr', force: true
-    #end
-
-    def inject_iiif_suggest
+    def inject_iiif_suggest_solrconfig
       unless IO.read('solr/conf/solrconfig.xml').include?('iiif_suggest')
         marker = '</config>'
         insert_into_file 'solr/conf/solrconfig.xml', before: marker do
@@ -45,10 +41,39 @@ module BlacklightIiifSearch
       end
     end
 
-    # TODO some injection into Solr schema.xml for:
-    #  - iiif_suggest fieldType
-    #  - iiif_suggest field
-    #  - copyField text -> iiif_suggest
+    def inject_iiif_suggest_schema
+      filepath = 'solr/conf/schema.xml'
+      unless IO.read(filepath).include?('iiif_suggest')
+        field_type_marker = '</types>'
+        insert_into_file filepath, before: field_type_marker do
+          "\n    <!-- BEGIN Blacklight IIIF Search autocomplete config -->
+    <fieldType name=\"iiif_suggest\" class=\"solr.TextField\" positionIncrementGap=\"100\">
+      <analyzer>
+        <tokenizer class=\"solr.WhitespaceTokenizerFactory\"/>
+        <filter class=\"solr.ICUFoldingFilterFactory\"/>
+        <filter class=\"solr.WordDelimiterGraphFilterFactory\"/>
+        <filter class=\"solr.LowerCaseFilterFactory\"/>
+        <filter class=\"solr.HyphenatedWordsFilterFactory\"/>
+        <filter class=\"solr.RemoveDuplicatesTokenFilterFactory\"/>
+      </analyzer>
+    </fieldType>
+    <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
+        end
 
+        fields_marker = '</fields>'
+        insert_into_file filepath, before: fields_marker do
+          "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
+   <field name=\"iiif_suggest\" type=\"iiif_suggest\" indexed=\"true\" stored=\"true\" multiValued=\"true\" />
+   <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
+        end
+
+        copy_marker = '</schema>'
+        insert_into_file filepath, before: copy_marker do
+          "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
+  <copyField source=\"text\" dest=\"iiif_suggest\"/>
+  <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
+        end
+      end
+    end
   end
 end
