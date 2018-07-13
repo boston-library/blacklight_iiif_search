@@ -20,7 +20,6 @@ module BlacklightIiifSearch
       <str name=\"highlight\">false</str>
       <str name=\"dictionaryImpl\">DocumentDictionaryFactory</str>
       <str name=\"suggestAnalyzerFieldType\">iiif_suggest</str>
-      <!-- <str name=\"suggestTokenizingAnalyzerFieldType\">textSuggestTokenizer</str> -->
       <str name=\"contextField\">is_page_of_s</str>
       <str name=\"buildOnCommit\">true</str>
       <str name=\"field\">iiif_suggest</str>

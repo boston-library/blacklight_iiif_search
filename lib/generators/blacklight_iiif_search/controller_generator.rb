@@ -28,7 +28,7 @@ include BlacklightIiifSearch::Controller"
       full_text_field: 'text',
       object_relation_field: 'is_page_of_s',
       supported_params: %w[q page],
-      autocomplete_path: 'iiif_suggest',
+      autocomplete_handler: 'iiif_suggest',
       suggester_name: 'iiifSuggester'
     }\n"
       end

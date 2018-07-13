@@ -1,6 +1,6 @@
+require 'iiif_search_shared'
 RSpec.describe CatalogController do
-  let(:controller) { described_class.new }
-  let(:query_term) { 'bird' }
+  include_context 'iiif_search_shared'
 
   describe 'controller methods' do
     describe '#iiif_search' do

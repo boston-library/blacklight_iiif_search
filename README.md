@@ -48,6 +48,8 @@ The generator:
 * Adds some configuration settings to `app/controller/catalog_controller.rb`
 * Adds the `IiifSearchBuilder` class to `app/models`
 * Adds routing to `config/routes.rb`
+* Injects some configuration into `solr/conf/schema.xml` and `solr/conf/solrconfig.xml`
+  (To skip the Solr changes, run the install command with `skip-solr` flag.)
 
 After install, you'll probably need to adjust the `iiif_search` settings in `CatalogController`:
 
@@ -56,6 +58,8 @@ Config option | Description
 `full_text_field`        | The Solr field where the OCR text is indexed/stored.
 `object_relation_field`  | The Solr field where the parent/child relationship is stored.
 `supported_params`       | An array of IIIF Content Search [query parameters](http://iiif.io/api/search/1.0/#query-parameters) supported by the search service. (Note: `motivation`, `date`, and `user` are not currently supported.)
+`autocomplete_handler`   | The value of the @name attribute for the Solr `<requestHandler name="#{autocomplete_handler}">` in solrconfig.xml that handles autocomplete suggestions.  
+`suggester_name`         | The value of the `<str name="name">#{suggester_name}</str>` element for the Solr <searchComponent> in solrconfig.xml that handles autocomplete suggestions.
 
 See below for additional customization options.
 
@@ -65,13 +69,25 @@ The search service will be available at:
 ```
 http://host:port/catalog/:id/iiif_search
 ```
-There is a `solr_document_iiif_search` route helper that can be called to construct a path or URL to the service in your app. For example:
+There is a `solr_document_iiif_search` route helper that can be called to construct a path or URL to the search service in your app. For example:
 ```ruby
 solr_document_iiif_search_url('abcd1234', {q: 'blacklight'})
 ```
 Would return:
 ```
 http://host:port/catalog/abcd1234/iiif_search?q=blacklight
+```
+The autocomplete service will be available at:
+```
+http://host:port/catalog/:id/iiif_suggest
+```
+There is a `solr_document_iiif_suggest` route helper that can be called to construct a path or URL to the autocomplete service in your app. For example:
+```ruby
+solr_document_iiif_suggest_url('abcd1234', {q: 'blacklight'})
+```
+Would return:
+```
+http://host:port/catalog/abcd1234/iiif_suggest?q=blacklight
 ```
 
 ## Implementation
@@ -114,7 +130,33 @@ In order for a viewer application to be aware of the search service, you need to
 ```
 The value of `@id` should be replaced with the link to the search service for the item. The text of `label` can be whatever you want.
 
+To make a viewer aware of the autocomplete service, include the following in your IIIF manifest:
+```json
+"service": {
+  "@context": "http://iiif.io/api/search/0/context.json",
+  "@id": "http://host:port/catalog/:id/iiif_search",
+  "profile": "http://iiif.io/api/search/0/search",
+  "label": "Search within this item",
+  "service": {
+    "@id": "http://example.org/services/identifier/autocomplete",
+    "profile": "http://iiif.io/api/search/0/autocomplete"
+  }
+}
+```
 _Important note_: Although the current version (as of June 2018) of the Content Search API is `http://iiif.io/api/search/1.0`, the Universal Viewer will NOT automatically recognize the search service unless the `@context` and `profile` URIs use `http://iiif.io/api/search/0/` as the base.
+
+**Configuring Solr for contextual autocomplete**
+
+Solr >=5.4 provides the ability to do _contextual_ autocomplete queries that can be filtered/limited by a `contextField` configured in the autocomplete `<searchComponent>` in solrconfig.xml.
+
+For IIIF Content Search autocomplete behavior, we want to limit the suggestions to terms that appear in the parent object. The `contextField` should be the same as the `object_relation_field` defined in the `CatalogController` configuration.
+
+This is best set up as a separate `<searchComponent>` from any existing autocomplete/suggest functionality that may already be defined in your Solr configuration. The install generator will create a new `<searchComponent>` in solrconfig.xml and several field definitions in the schema.xml file to support the autocomplete behavior. You may need to customize these settings for your implementation.
+
+_Note_: It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
+```
+http://host:port/solr/[core_name]/iiif_suggest?wt=json&suggest.cfq=[parent_identifier]&q=[query_term]
+```
 
 ## Test Drive
 
@@ -137,6 +179,7 @@ $ rails s
 ```
 5. In a browser, go to: `http://127.0.0.1:3000`
 6. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=denim`
+7. Test a sample autocomplete: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=bat`
 
 To see how search snippets work, change the value of the `full_text_field` config to `isbn_t` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
 

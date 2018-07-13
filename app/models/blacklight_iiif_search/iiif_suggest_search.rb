@@ -27,7 +27,7 @@ module BlacklightIiifSearch
     # @return [RSolr::HashWithResponse]
     def suggest_results
       suggest_params = { q: query, :'suggest.cfq' => document_id }
-      repository.connection.send_and_receive(iiif_config[:autocomplete_path],
+      repository.connection.send_and_receive(iiif_config[:autocomplete_handler],
                                              params: suggest_params)
     end
   end

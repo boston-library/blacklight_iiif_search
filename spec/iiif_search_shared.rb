@@ -3,8 +3,8 @@
 RSpec.shared_context 'iiif_search_shared' do
   let(:parent_id) { '7s75dn48d' }
   let(:page_id) { '7s75dn58n' }
-  let(:query_term) { 'bird' }
-  let(:snippet) { 'sed meh put a <em>bird</em> on it chartreuse' }
+  let(:query_term) { 'sugar' }
+  let(:snippet) { 'Twelve pounds of <em>sugar</em>, two quarts of water' }
   let(:controller) { CatalogController.new }
   let(:blacklight_config) { controller.blacklight_config }
   let(:search_params) do
