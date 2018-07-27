@@ -26,18 +26,18 @@ RSpec.describe BlacklightIiifSearch::IiifSuggestResponse do
     subject { iiif_suggest_response.terms }
 
     it 'returns the expected data' do
-      expect(subject.length).to eq(2)
+      expect(subject.length).to eq(5)
       expect(subject.first[:url]).not_to be_falsey
-      expect(subject.first[:match]).to include(query_term)
+      expect(subject.first[:match].match(/\A#{suggest_query_term}/)).to be_truthy
     end
   end
 
   describe '#iiif_search_url' do
-    subject { iiif_suggest_response.iiif_search_url(query_term) }
+    subject { iiif_suggest_response.iiif_search_url(suggest_query_term) }
 
     it 'returns a search url' do
       expect(subject).to include(parent_id)
-      expect(subject).to include(query_term)
+      expect(subject).to include(suggest_query_term)
     end
   end
 end

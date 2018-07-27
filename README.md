@@ -2,9 +2,9 @@
 
 A plugin that provides IIIF Content Search functionality for [Blacklight](https://github.com/projectblacklight/blacklight)-based applications.
 
-[IIIF Content Search](http://iiif.io/api/search/1.0) is an API specification for facilitating searching the full text of a resource that is described by a IIIF Presentation API manifest.
+[IIIF Content Search](http://iiif.io/api/search/1.0) is an API specification for searching the full text of a resource that is described by a [IIIF Presentation API](https://iiif.io/api/presentation/2.1) manifest.
 
-When installed, the plugin provides an endpoint in your app that will return a JSON response conforming to IIIF Content Search API v. 1.0.
+When installed, this plugin provides an endpoint in your Blacklight app that will return a JSON response conforming to IIIF Content Search API v. 1.0.
 
 By integrating the URL for this service into your IIIF Presentation manifests, clients/viewers that support the IIIF Content Search API (such as the [Universal Viewer](https://universalviewer.io/)) will be able to provide functionality for searching within a resource and displaying results.
 
@@ -48,7 +48,7 @@ The generator:
 * Adds some configuration settings to `app/controller/catalog_controller.rb`
 * Adds the `IiifSearchBuilder` class to `app/models`
 * Adds routing to `config/routes.rb`
-* Injects some configuration into `solr/conf/schema.xml` and `solr/conf/solrconfig.xml`
+* Injects some configuration into `solr/conf/schema.xml` and `solr/conf/solrconfig.xml` to support contextual autocomplete
   (To skip the Solr changes, run the install command with `skip-solr` flag.)
 
 After install, you'll probably need to adjust the `iiif_search` settings in `CatalogController`:
@@ -58,7 +58,7 @@ Config option | Description
 `full_text_field`        | The Solr field where the OCR text is indexed/stored.
 `object_relation_field`  | The Solr field where the parent/child relationship is stored.
 `supported_params`       | An array of IIIF Content Search [query parameters](http://iiif.io/api/search/1.0/#query-parameters) supported by the search service. (Note: `motivation`, `date`, and `user` are not currently supported.)
-`autocomplete_handler`   | The value of the @name attribute for the Solr `<requestHandler name="#{autocomplete_handler}">` in solrconfig.xml that handles autocomplete suggestions.  
+`autocomplete_handler`   | The value of the @name attribute for the Solr `<requestHandler name="/#{autocomplete_handler}">` in solrconfig.xml that handles autocomplete suggestions.  
 `suggester_name`         | The value of the `<str name="name">#{suggester_name}</str>` element for the Solr <searchComponent> in solrconfig.xml that handles autocomplete suggestions.
 
 See below for additional customization options.
@@ -99,7 +99,7 @@ The plugin needs to construct Solr query parameters such that only records that 
 ```ruby
 {is_page_of_s: 'parent_id'}
 ```
-Where `parent_id` is the identifier of the parent object. The above assumes that each page record has an indexed `is_page_of_s` field that enumerates its parent.
+Where `parent_id` is the identifier of the parent object. The above assumes that each page record has an indexed `is_page_of_s` field that indicates its parent.
  
 To customize the construction of the parent/child object relationship Solr parameters (beyond the name of the field, which can be set in the `CatalogController` config), create a local copy of the `BlacklightIiifSearch::IiifSearchBehavior` module in `app/models/concerns/blacklight_iiif_search/iiif_search_behavior.rb` and override the `#object_relation_solr_params` method.
 
@@ -149,9 +149,11 @@ _Important note_: Although the current version (as of June 2018) of the Content 
 
 Solr >=5.4 provides the ability to do _contextual_ autocomplete queries that can be filtered/limited by a `contextField` configured in the autocomplete `<searchComponent>` in solrconfig.xml.
 
-For IIIF Content Search autocomplete behavior, we want to limit the suggestions to terms that appear in the parent object. The `contextField` should be the same as the `object_relation_field` defined in the `CatalogController` configuration.
+For IIIF Content Search autocomplete behavior, we want to limit the suggestions to terms that appear in pages that are children of the parent object. The `contextField` should be the same as the `object_relation_field` defined in the `CatalogController` configuration.
 
 This is best set up as a separate `<searchComponent>` from any existing autocomplete/suggest functionality that may already be defined in your Solr configuration. The install generator will create a new `<searchComponent>` in solrconfig.xml and several field definitions in the schema.xml file to support the autocomplete behavior. You may need to customize these settings for your implementation.
+
+You also need to add the `solr-tokenizing_suggester-7.x.jar` library to your Solr install's `contrib` directory. This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
 
 _Note_: It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
 ```
@@ -169,17 +171,27 @@ $ rake engine_cart:generate
 ```
 $ solr_wrapper
 ```
-3. Index sample documents into Solr (run from `./.internal_test_app`):
+This will throw an error, since the Solr config will look for a library that doesn't exist yet.
+3. Copy the `solr-tokenizing_suggester-7.x.jar` library to Solr's `contrib` directory:
+```
+# solr_wrapper typically installs Solr in /tmp/solr-7.*.*/
+$ cp ./lib/generators/blacklight_iiif_search/templates/solr/lib/solr-tokenizing_suggester-7.x.jar /path/to/solr/contrib
+```
+4. Start up Solr again (run from same new terminal window):
+```
+$ solr_wrapper
+```
+5. Index sample documents into Solr (run from `./.internal_test_app`):
 ```
 $ RAILS_ENV=test rake blacklight_iiif_search:index:seed
 ```
-4. Start up the Rails server (run from `./.internal_test_app`):
+6. Start up the Rails server (run from `./.internal_test_app`):
 ```
 $ rails s
 ```
-5. In a browser, go to: `http://127.0.0.1:3000`
-6. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=denim`
-7. Test a sample autocomplete: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=bat`
+7. In a browser, go to: `http://127.0.0.1:3000`. You should see the default Blacklight home page.
+8. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=sugar`
+9. Test a sample autocomplete request: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=be`
 
 To see how search snippets work, change the value of the `full_text_field` config to `isbn_t` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
 
@@ -192,31 +204,10 @@ After cloning the repository, and running `bundle install`, run `rake ci` from t
     * (Note: The Solr config is created by Blackight's installer, and is generated into `.internal_test_app/solr/conf`.)
 4. Run all specs
 
-**Various useful development commands:**
-
-Create the internal test app:
-```
-$ rake engine_cart:generate
-```
-Remove the internal test app:
-```
-$ rake engine_cart:clean
-```
-Start up Solr:
-```
-$ solr_wrapper
-```
-Clean out Solr:
-```
-$ solr_wrapper clean
-```
-Index sample documents into Solr (run from `.internal_test_app`):
-```
-$ RAILS_ENV=test rake blacklight_iiif_search:index:seed
-```
-
 ## Credits
 
 This project was developed as part of the [Newspapers in Samvera](https://www.imls.gov/grants/awarded/lg-70-17-0043-17) grant. Thanks to the Institute of Museum and Library Services for their support.
 
 Inspiration for this code was drawn from Stanford University Digital Library's [content_search](https://github.com/sul-dlss/content_search) and NCSU Libraries' [ocracoke](https://github.com/NCSU-Libraries/ocracoke).
+
+Special thanks to [Chris Beer](https://github.com/cbeer) for the use of the `solr-tokenizing_suggester-7.x.jar` library.

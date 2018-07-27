@@ -16,7 +16,7 @@ RSpec.describe BlacklightIiifSearch::IiifSuggestSearch do
     end
 
     it 'returns the expected data' do
-      expect(subject['terms'].length).to eq(2)
+      expect(subject['terms'].length).to eq(5)
     end
   end
 
@@ -28,9 +28,9 @@ RSpec.describe BlacklightIiifSearch::IiifSuggestSearch do
     end
 
     it 'returns the expected data' do
-      terms = subject['suggest'][blacklight_config.iiif_search[:suggester_name]][query_term]['suggestions']
-      expect(terms.length).to eq(2)
-      expect(terms.first['term']).to include(query_term)
+      terms = subject['suggest'][blacklight_config.iiif_search[:suggester_name]][suggest_query_term]['suggestions']
+      expect(terms.length).to eq(5)
+      expect(terms.first['term'].match(/\A#{suggest_query_term}/)).to be_truthy
     end
   end
 end

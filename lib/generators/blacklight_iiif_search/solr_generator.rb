@@ -13,13 +13,15 @@ module BlacklightIiifSearch
         marker = '</config>'
         insert_into_file 'solr/conf/solrconfig.xml', before: marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
+  <!-- solr-tokenizing_suggester is necessary to return single terms from the suggester -->
+  <lib dir=\"${solr.install.dir:../../../..}/contrib\" regex=\"solr-tokenizing_suggester-7.x.jar\" />\n
   <searchComponent name=\"iiif_suggest\" class=\"solr.SuggestComponent\">
     <lst name=\"suggester\">
       <str name=\"name\">iiifSuggester</str>
-      <str name=\"lookupImpl\">AnalyzingInfixLookupFactory</str>
-      <str name=\"highlight\">false</str>
+      <str name=\"lookupImpl\">edu.stanford.dlss.search.suggest.analyzing.TokenizingLookupFactory</str>
       <str name=\"dictionaryImpl\">DocumentDictionaryFactory</str>
-      <str name=\"suggestAnalyzerFieldType\">iiif_suggest</str>
+      <str name=\"suggestAnalyzerFieldType\">textSuggest</str>
+      <str name=\"suggestTokenizingAnalyzerFieldType\">textSuggestTokenizer</str>
       <str name=\"contextField\">is_page_of_s</str>
       <str name=\"buildOnCommit\">true</str>
       <str name=\"field\">iiif_suggest</str>
@@ -46,14 +48,16 @@ module BlacklightIiifSearch
         field_type_marker = '</types>'
         insert_into_file filepath, before: field_type_marker do
           "\n    <!-- BEGIN Blacklight IIIF Search autocomplete config -->
-    <fieldType name=\"iiif_suggest\" class=\"solr.TextField\" positionIncrementGap=\"100\">
+    <fieldType name=\"textSuggestTokenizer\" class=\"solr.TextField\" positionIncrementGap=\"100\">
       <analyzer>
         <tokenizer class=\"solr.WhitespaceTokenizerFactory\"/>
-        <filter class=\"solr.ICUFoldingFilterFactory\"/>
+        <filter class=\"solr.StopFilterFactory\" ignoreCase=\"true\" words=\"stopwords_en.txt\"/>
         <filter class=\"solr.WordDelimiterGraphFilterFactory\"/>
         <filter class=\"solr.LowerCaseFilterFactory\"/>
         <filter class=\"solr.HyphenatedWordsFilterFactory\"/>
         <filter class=\"solr.RemoveDuplicatesTokenFilterFactory\"/>
+        <!-- uncomment below to enable multi-word matches -->
+        <!-- <filter class=\"solr.ShingleFilterFactory\" outputUnigrams=\"true\" outputUnigramsIfNoShingles=\"true\" maxShingleSize=\"3\" /> -->
       </analyzer>
     </fieldType>
     <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
@@ -62,7 +66,7 @@ module BlacklightIiifSearch
         fields_marker = '</fields>'
         insert_into_file filepath, before: fields_marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
-   <field name=\"iiif_suggest\" type=\"iiif_suggest\" indexed=\"true\" stored=\"true\" multiValued=\"true\" />
+   <field name=\"iiif_suggest\" type=\"textSuggest\" indexed=\"true\" stored=\"true\" multiValued=\"true\" />
    <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
         end
 
@@ -73,6 +77,11 @@ module BlacklightIiifSearch
   <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
         end
       end
+    end
+
+    def copy_suggester_library
+      copy_file 'solr/lib/solr-tokenizing_suggester-7.x.jar',
+                'solr/lib/solr-tokenizing_suggester-7.x.jar'
     end
   end
 end
