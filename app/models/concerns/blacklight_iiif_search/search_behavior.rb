@@ -2,11 +2,12 @@
 module BlacklightIiifSearch
   module SearchBehavior
     ##
-    # limit the search to items that have some relationship
+    # params to limit the search to items that have some relationship
     # with the parent object (e.g. pages)
-    # return a hash with:
+    # for ex., return a {key: value} hash where:
     # key:   solr field for image/file to object relationship
-    # value: identifier to match
+    # value: identifier of parent
+    # @return [Hash]
     def object_relation_solr_params
       { iiif_config[:object_relation_field] => id }
     end

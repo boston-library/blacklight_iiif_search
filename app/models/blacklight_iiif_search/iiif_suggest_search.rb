@@ -7,6 +7,7 @@ module BlacklightIiifSearch
     ##
     # @param [Hash] params
     # @param [Blacklight::AbstractRepository] repository
+    # @param [CatalogController] controller
     def initialize(params, repository, controller)
       @params = params
       @query = params[:q]
@@ -16,14 +17,16 @@ module BlacklightIiifSearch
       @controller = controller
     end
 
-    # @return [BlacklightIiifSearch::IiifSuggestResponse]
+    ##
+    # Return the termList response
+    # @return [IIIF::OrderedHash]
     def response
       response = IiifSuggestResponse.new(suggest_results, params, controller)
       response.term_list
     end
 
     ##
-    # Query the suggest handler using RSolr::Client::send_and_receive
+    # Query the suggest handler
     # @return [RSolr::HashWithResponse]
     def suggest_results
       suggest_params = { q: query, :'suggest.cfq' => document_id }

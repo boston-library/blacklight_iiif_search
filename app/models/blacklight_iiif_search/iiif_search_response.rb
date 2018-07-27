@@ -5,15 +5,22 @@ module BlacklightIiifSearch
 
     attr_reader :solr_response, :controller, :iiif_config
 
-    def initialize(solr_response, parent_document, controller, iiif_search_config)
+    ##
+    # @param [Blacklight::Solr::Response] solr_response
+    # @param [SolrDocument] parent_document
+    # @param [CatalogController] controller
+    def initialize(solr_response, parent_document, controller)
       @solr_response = solr_response
       @parent_document = parent_document
       @controller = controller
-      @iiif_config = iiif_search_config
+      @iiif_config = controller.iiif_search_config
       @resources = []
       @hits = []
     end
 
+    ##
+    # constructs the IIIF::Presentation::AnnotationList
+    # @return [IIIF::OrderedHash]
     def annotation_list
       list_id = controller.request.original_url
       anno_list = IIIF::Presentation::AnnotationList.new('@id' => list_id)
@@ -30,6 +37,9 @@ module BlacklightIiifSearch
       anno_list.to_ordered_hash(force: true, include_context: false)
     end
 
+    ##
+    # Return an array of IiifSearchAnnotation objects
+    # @return [Array]
     def resources
       @total = 0
       solr_response['highlighting'].each do |id, hl_hash|
@@ -61,6 +71,8 @@ module BlacklightIiifSearch
       @resources
     end
 
+    ##
+    # @return [IIIF::Presentation::Layer]
     def within
       within_hash = IIIF::Presentation::Layer.new
       within_hash['ignored'] = ignored
@@ -73,11 +85,16 @@ module BlacklightIiifSearch
       within_hash
     end
 
+    ##
+    # create a URL for the previous/next page of results
+    # @return [String]
     def paged_url(page_index)
       controller.solr_document_iiif_search_url(clean_params.merge(page: page_index))
     end
 
-    # returns ActionController::Parameters
+    ##
+    # remove ignored or irrelevant params from the params hash
+    # @return [ActionController::Parameters]
     def clean_params
       remove = ignored.map(&:to_sym)
       controller.iiif_search_params.except(*%i[page solr_document_id] + remove)

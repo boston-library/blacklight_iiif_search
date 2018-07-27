@@ -6,8 +6,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
     controller.search_results(iiif_search.solr_params).first
   end
   let(:iiif_search_response) do
-    described_class.new(solr_response, parent_document,
-                        controller, blacklight_config.iiif_search)
+    described_class.new(solr_response, parent_document, controller)
   end
 
   describe 'class' do

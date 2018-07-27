@@ -7,6 +7,13 @@ module BlacklightIiifSearch
     attr_reader :document, :query, :hl_index, :snippet, :controller,
                 :parent_document
 
+    ##
+    # @param [SolrDocument] document
+    # @param [String] query
+    # @param [Integer] hl_index
+    # @param [String] snippet
+    # @param [CatalogController] controller
+    # @param [SolrDocument] parent_document
     def initialize(document, query, hl_index, snippet, controller, parent_document)
       @document = document
       @query = query
@@ -16,6 +23,8 @@ module BlacklightIiifSearch
       @parent_document = parent_document
     end
 
+    ##
+    # @return [IIIF::Presentation::Annotation]
     def as_hash
       annotation = IIIF::Presentation::Annotation.new('@id' => annotation_id)
       annotation.resource = text_resource_for_annotation if snippet
@@ -23,6 +32,8 @@ module BlacklightIiifSearch
       annotation
     end
 
+    ##
+    # @return [IIIF::Presentation::Resource]
     def text_resource_for_annotation
       clean_snippet = ActionView::Base.full_sanitizer.sanitize(snippet)
       IIIF::Presentation::Resource.new('@type' => 'cnt:ContentAsText',
