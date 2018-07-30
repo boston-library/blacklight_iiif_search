@@ -1,5 +1,7 @@
 # Blacklight IIIF Search
 
+[![Build Status](https://travis-ci.org/boston-library/blacklight_iiif_search.png?branch=master)](https://travis-ci.org/boston-library/blacklight_iiif_search) [![Coverage Status](https://coveralls.io/repos/github/boston-library/blacklight_iiif_search/badge.svg?branch=master)](https://coveralls.io/github/boston-library/blacklight_iiif_search?branch=master)
+
 A plugin that provides IIIF Content Search functionality for [Blacklight](https://github.com/projectblacklight/blacklight)-based applications.
 
 [IIIF Content Search](http://iiif.io/api/search/1.0) is an API specification for searching the full text of a resource that is described by a [IIIF Presentation API](https://iiif.io/api/presentation/2.1) manifest.
