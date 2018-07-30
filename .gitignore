@@ -15,3 +15,4 @@ Gemfile.lock
 .idea/
 
 .internal_test_app
+.coveralls.yml
