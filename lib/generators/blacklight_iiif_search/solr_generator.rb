@@ -11,7 +11,7 @@ module BlacklightIiifSearch
     def inject_iiif_suggest_solrconfig
       unless IO.read('solr/conf/solrconfig.xml').include?('iiif_suggest')
         marker = '</config>'
-        insert_into_file 'solr/conf/solrconfig.xml', before: marker do
+        inject_into_file 'solr/conf/solrconfig.xml', before: marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
   <!-- solr-tokenizing_suggester is necessary to return single terms from the suggester -->
   <lib dir=\"${solr.install.dir:../../../..}/contrib\" regex=\"solr-tokenizing_suggester-7.x.jar\" />\n
@@ -46,7 +46,7 @@ module BlacklightIiifSearch
       filepath = 'solr/conf/schema.xml'
       unless IO.read(filepath).include?('iiif_suggest')
         field_type_marker = '</types>'
-        insert_into_file filepath, before: field_type_marker do
+        inject_into_file filepath, before: field_type_marker do
           "\n    <!-- BEGIN Blacklight IIIF Search autocomplete config -->
     <fieldType name=\"textSuggestTokenizer\" class=\"solr.TextField\" positionIncrementGap=\"100\">
       <analyzer>
@@ -64,14 +64,14 @@ module BlacklightIiifSearch
         end
 
         fields_marker = '</fields>'
-        insert_into_file filepath, before: fields_marker do
+        inject_into_file filepath, before: fields_marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
    <field name=\"iiif_suggest\" type=\"textSuggest\" indexed=\"true\" stored=\"true\" multiValued=\"true\" />
    <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
         end
 
         copy_marker = '</schema>'
-        insert_into_file filepath, before: copy_marker do
+        inject_into_file filepath, before: copy_marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
   <copyField source=\"text\" dest=\"iiif_suggest\"/>
   <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
