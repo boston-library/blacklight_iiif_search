@@ -12,7 +12,7 @@ module BlacklightIiifSearch
     def inject_iiif_search_routes
       unless IO.read('config/routes.rb').include?('BlacklightIiifSearch::Routes')
         marker = 'Rails.application.routes.draw do'
-        insert_into_file 'config/routes.rb', after: marker do
+        inject_into_file 'config/routes.rb', after: marker do
           "\n\n  concern :iiif_search, BlacklightIiifSearch::Routes.new"
         end
         # for blacklight_range_limit
