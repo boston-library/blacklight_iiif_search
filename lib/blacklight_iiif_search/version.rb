@@ -1,3 +1,3 @@
 module BlacklightIiifSearch
-  VERSION = '0.0.1-alpha'.freeze
+  VERSION = '0.0.2-alpha'.freeze
 end
