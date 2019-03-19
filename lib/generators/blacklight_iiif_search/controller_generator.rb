@@ -18,8 +18,8 @@ module BlacklightIiifSearch
       return if IO.read("app/controllers/#{controller_name}_controller.rb").include?('BlacklightIiifSearch')
       marker = 'configure_blacklight do |config|'
       inject_into_file "app/controllers/#{controller_name}_controller.rb", before: marker do
-        "\n  # CatalogController-scope behavior and configuration for BlacklightIiifSearch
-  include BlacklightIiifSearch::Controller\n\n"
+        "  # CatalogController-scope behavior and configuration for BlacklightIiifSearch
+  include BlacklightIiifSearch::Controller\n\n  "
       end
       inject_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
         "\n\n    # configuration for Blacklight IIIF Content Search
