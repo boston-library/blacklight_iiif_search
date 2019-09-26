@@ -34,7 +34,7 @@ RuboCop::RakeTask.new(:rubocop)
 desc 'Run test suite'
 task ci: ['engine_cart:generate'] do # TODO: add rubocop
   SolrWrapper.wrap do |solr|
-    FileUtils.cp File.join(__dir__, 'lib', 'generators', 'blacklight_iiif_search', 'templates', 'solr', 'lib', 'solr-tokenizing_suggester-7.x.jar'),
+    FileUtils.cp File.join(__dir__, 'lib', 'generators', 'blacklight_iiif_search', 'templates', 'solr', 'lib', 'tokenizing-suggest-v1.0.1.jar'),
                  File.join(solr.instance_dir, 'contrib')
     solr.with_collection do
       within_test_app do
