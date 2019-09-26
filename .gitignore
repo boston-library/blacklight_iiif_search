@@ -17,3 +17,6 @@ Gemfile.lock
 .internal_test_app
 .coveralls.yml
 *.gem
+coverage/*
+
+

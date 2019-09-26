@@ -10,9 +10,6 @@ When installed, this plugin provides an endpoint in your Blacklight app that wil
 
 By integrating the URL for this service into your IIIF Presentation manifests, clients/viewers that support the IIIF Content Search API (such as the [Universal Viewer](https://universalviewer.io/)) will be able to provide functionality for searching within a resource and displaying results.
 
-> :warning:
-> This project is under active development, and still in the "alpha" phase. Feedback/comments welcome!
-
 ## Prerequisites
 
 Currently highly opinionated towards Solr as the back-end search index.
@@ -26,11 +23,11 @@ This plugin assumes:
     * if search term highlighting is desired, the text field must be indexed and stored
 5. The relationship between page records and their parent book/volume/issue/etc records is indexed in Solr
 
-Blacklight Version Compatibility:
+Blacklight/Solr Version Compatibility:
 
-blacklight_iiif_search version | works with Blacklight
------------------------ | ---------------------
-0.0.1-alpha | >= 6.3.0 to < 7.* 
+blacklight_iiif_search version | works with Blacklight | works with Solr
+----------------------- | --------------------- | -----------
+1.0 | >= 6.3.0 to < 7.* | 7.*
 
 ## Installation
 
@@ -155,7 +152,7 @@ For IIIF Content Search autocomplete behavior, we want to limit the suggestions 
 
 This is best set up as a separate `<searchComponent>` from any existing autocomplete/suggest functionality that may already be defined in your Solr configuration. The install generator will create a new `<searchComponent>` in solrconfig.xml and several field definitions in the schema.xml file to support the autocomplete behavior. You may need to customize these settings for your implementation.
 
-You also need to add the `solr-tokenizing_suggester-7.x.jar` library to your Solr install's `contrib` directory. This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
+You also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory. This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
 
 _Note_: It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
 ```
@@ -174,10 +171,9 @@ $ rake engine_cart:generate
 $ solr_wrapper
 ```
 This will throw an error, since the Solr config will look for a library that doesn't exist yet.
-3. Copy the `solr-tokenizing_suggester-7.x.jar` library to Solr's `contrib` directory:
+3. Copy the `tokenizing-suggest-v1.0.1.jar` library to Solr's `contrib` directory:
 ```
-# solr_wrapper typically installs Solr in /tmp/solr-7.*.*/
-$ cp ./lib/generators/blacklight_iiif_search/templates/solr/lib/solr-tokenizing_suggester-7.x.jar /path/to/solr/contrib
+$ cp ./lib/generators/blacklight_iiif_search/templates/solr/lib/tokenizing-suggest-v1.0.1.jar /path/to/solr/contrib
 ```
 4. Start up Solr again (run from same new terminal window):
 ```
@@ -212,4 +208,4 @@ This project was developed as part of the [Newspapers in Samvera](https://www.im
 
 Inspiration for this code was drawn from Stanford University Digital Library's [content_search](https://github.com/sul-dlss/content_search) and NCSU Libraries' [ocracoke](https://github.com/NCSU-Libraries/ocracoke).
 
-Special thanks to [Chris Beer](https://github.com/cbeer) for the use of the `solr-tokenizing_suggester-7.x.jar` library.
+Special thanks to [Chris Beer](https://github.com/cbeer) and [Stanford University Digital Library](https://github.com/sul-dlss) for the use of the `tokenizing-suggest-v1.0.1.jar` library.

@@ -14,7 +14,7 @@ module BlacklightIiifSearch
         inject_into_file 'solr/conf/solrconfig.xml', before: marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
   <!-- solr-tokenizing_suggester is necessary to return single terms from the suggester -->
-  <lib dir=\"${solr.install.dir:../../../..}/contrib\" regex=\"solr-tokenizing_suggester-7.x.jar\" />\n
+  <lib dir=\"${solr.install.dir:../../../..}/contrib\" regex=\"tokenizing-suggest-v1.0.1.jar\" />\n
   <searchComponent name=\"iiif_suggest\" class=\"solr.SuggestComponent\">
     <lst name=\"suggester\">
       <str name=\"name\">iiifSuggester</str>
