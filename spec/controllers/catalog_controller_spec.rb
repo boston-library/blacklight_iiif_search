@@ -67,7 +67,7 @@ RSpec.describe CatalogController do
       let(:json) { JSON.parse(response.body) }
 
       it 'returns a response' do
-        expect(response).to be_success
+        expect(response.code).to eq '200'
       end
 
       it 'returns a IIIF AnnotationList' do
@@ -86,7 +86,7 @@ RSpec.describe CatalogController do
       let(:json) { JSON.parse(response.body) }
 
       it 'returns a response' do
-        expect(response).to be_success
+        expect(response.code).to eq '200'
       end
 
       it 'returns a IIIF TermList' do

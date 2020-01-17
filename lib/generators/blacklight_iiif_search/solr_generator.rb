@@ -22,7 +22,7 @@ module BlacklightIiifSearch
       <str name=\"dictionaryImpl\">DocumentDictionaryFactory</str>
       <str name=\"suggestAnalyzerFieldType\">textSuggest</str>
       <str name=\"suggestTokenizingAnalyzerFieldType\">textSuggestTokenizer</str>
-      <str name=\"contextField\">is_page_of_s</str>
+      <str name=\"contextField\">is_page_of_ssi</str>
       <str name=\"buildOnCommit\">true</str>
       <str name=\"field\">iiif_suggest</str>
     </lst>
@@ -73,15 +73,15 @@ module BlacklightIiifSearch
         copy_marker = '</schema>'
         inject_into_file filepath, before: copy_marker do
           "  <!-- BEGIN Blacklight IIIF Search autocomplete config -->
-  <copyField source=\"text\" dest=\"iiif_suggest\"/>
+  <copyField source=\"all_text_timv\" dest=\"iiif_suggest\"/>
   <!-- END Blacklight IIIF Search autocomplete config -->\n\n"
         end
       end
     end
 
     def copy_suggester_library
-      copy_file 'solr/lib/solr-tokenizing_suggester-7.x.jar',
-                'solr/lib/solr-tokenizing_suggester-7.x.jar'
+      copy_file 'solr/lib/tokenizing-suggest-v1.0.1.jar',
+                'solr/lib/tokenizing-suggest-v1.0.1.jar'
     end
   end
 end
