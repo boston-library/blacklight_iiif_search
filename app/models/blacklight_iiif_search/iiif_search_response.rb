@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # corresponds to a IIIF Annotation List
 module BlacklightIiifSearch
   class IiifSearchResponse

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # add the SearchBuilder to the implementing application
 require 'rails/generators'
 

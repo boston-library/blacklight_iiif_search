@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 begin
   require 'bundler/setup'
 rescue LoadError
@@ -32,7 +34,7 @@ require 'rubocop/rake_task'
 RuboCop::RakeTask.new(:rubocop)
 
 desc 'Run test suite'
-task ci: ['engine_cart:generate'] do # TODO: add rubocop
+task ci: [:rubocop, 'engine_cart:generate'] do
   SolrWrapper.wrap do |solr|
     FileUtils.cp File.join(__dir__, 'lib', 'generators', 'blacklight_iiif_search', 'templates', 'solr', 'lib', 'tokenizing-suggest-v1.0.1.jar'),
                  File.join(solr.instance_dir, 'contrib')

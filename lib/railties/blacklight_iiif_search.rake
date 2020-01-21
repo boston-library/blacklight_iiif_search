@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :blacklight_iiif_search do
   namespace :index do
     desc 'Put sample data into solr'

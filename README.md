@@ -96,9 +96,9 @@ In order to successfully deploy this plugin, you'll most likely need to customiz
 
 The plugin needs to construct Solr query parameters such that only records that represent children/members (e.g. pages) of the parent work are returned. The out-of-the-box default is:
 ```ruby
-{is_page_of_s: 'parent_id'}
+{is_page_of_ssi: 'parent_id'}
 ```
-Where `parent_id` is the identifier of the parent object. The above assumes that each page record has an indexed `is_page_of_s` field that indicates its parent.
+Where `parent_id` is the identifier of the parent object. The above assumes that each page record has an indexed `is_page_of_ssi` field that indicates its parent.
  
 To customize the construction of the parent/child object relationship Solr parameters (beyond the name of the field, which can be set in the `CatalogController` config), create a local copy of the `BlacklightIiifSearch::IiifSearchBehavior` module in `app/models/concerns/blacklight_iiif_search/iiif_search_behavior.rb` and override the `#object_relation_solr_params` method.
 
@@ -191,7 +191,7 @@ $ rails s
 8. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=sugar`
 9. Test a sample autocomplete request: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=be`
 
-To see how search snippets work, change the value of the `full_text_field` config to `isbn_t` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
+To see how search snippets work, change the value of the `full_text_field` config to `alternative_title_tsim` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
 
 ## Development
 

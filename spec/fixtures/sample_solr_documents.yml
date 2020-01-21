@@ -1,272 +1,272 @@
 # Sample Solr docs for full-text search, representing book and pages.
-# We duplicate full text in isbn_t field since this is the only text field
-# that is indexed and stored in schema.xml AND searched by default
-# requestHandler in solrconfig.xml in out-of-box Blacklight 6.* Solr config,
+# We duplicate full text in alternative_title_tsim field since this field
+# is indexed and stored in schema.xml AND searched by default
+# requestHandler in solrconfig.xml in out-of-box Blacklight 7.* Solr config,
 # which allows us to test highlighting and snippets.
 ---
-- object_model_s:
+- object_model_ssi:
   - Book
   id:
   - 7s75dn48d
-  label_s:
+  label_ssi:
   - Raw denim raclette hexagon
-  title_t:
+  title_tsim:
   - Raw denim raclette hexagon
-  title_display: Raw denim raclette hexagon
-  author_t:
+  title_ss: Raw denim raclette hexagon
+  author_tsim:
   - Doe, Jane
-  author_display: Jane Doe
-  has_searchable_text_b:
+  author_ss: Jane Doe
+  has_searchable_text_bsi:
   - true
-  text_direction_s:
+  text_direction_ssi:
   - ltr
   timestamp:
   - '2015-11-18T21:22:14.23Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn59x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn58n
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn60x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - RIGHT
-  page_num_label_s:
+  page_num_label_ssi:
   - 5
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - In selecting sugar the confectioner must bear in mind that it is the foundation of all confectionery, and can not expect to manufacture iirst-class goods except from first-class material; hence, select only sugar that is perfectly dry and of uniform quality, and in white, hard, sparkling crystals; only such sugar will give satisfaction.
-  isbn_t:
+  alternative_title_tsim:
   - In selecting sugar the confectioner must bear in mind that it is the foundation of all confectionery, and can not expect to manufacture iirst-class goods except from first-class material; hence, select only sugar that is perfectly dry and of uniform quality, and in white, hard, sparkling crystals; only such sugar will give satisfaction.
   timestamp:
   - '2015-11-18T21:09:44.574Z'
-- object_model_s:
+- object_model_ssi:
   - Book
   id:
   - 3j334603p
-  label_s:
+  label_ssi:
   - Quinoa gastropub snackwave
-  title_t:
+  title_tsim:
   - Quinoa gastropub snackwave
-  title_display: Quinoa gastropub snackwave
-  author_t:
+  title_ss: Quinoa gastropub snackwave
+  author_tsim:
   - Doe, John
-  author_display: John Doe
-  has_searchable_text_b:
+  author_ss: John Doe
+  has_searchable_text_bsi:
   - true
-  text_direction_s:
+  text_direction_ssi:
   - ltr
   timestamp:
   - '2015-11-18T19:32:49.014Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 3j334628j
-  is_file_of_s:
+  is_file_of_ssi:
   - 3j334603p
-  is_page_of_s:
+  is_page_of_ssi:
   - 3j334603p
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - RIGHT
-  page_num_label_s:
+  page_num_label_ssi:
   - 1
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - In choosing Colors for candy, certain qualifications are necessary. First, they must not fade or change when exposed to the light. Second, they must not be easily affected by acids or alkalies; hence, it has been difficult to produce colors that are reasonably permanent and at the same time harmless. Yet the following will be found as near perfect as any yet produced.
-  isbn_t:
+  alternative_title_tsim:
   - In choosing Colors for candy, certain qualifications are necessary. First, they must not fade or change when exposed to the light. Second, they must not be easily affected by acids or alkalies; hence, it has been difficult to produce colors that are reasonably permanent and at the same time harmless. Yet the following will be found as near perfect as any yet produced.
   timestamp:
   - '2015-11-18T17:27:35.361Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn58n
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-#  is_following_page_of_s:
+#  is_following_page_of_ssi:
 #  - 7s75dn57c
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn59x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - LEFT
-  page_num_label_s:
+  page_num_label_ssi:
   - 4
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - Twelve pounds of sugar, two quarts of water, stir until dissolved, then add one full teaspoon of cream of tartar, (or if you wish to use glucose, add three pounds of same, do this when you are weighing your sugar, by hollowing out a place in the center of the sugar and pouring in the glucose). Now put on the steamer and let it remain until the batch begins to cook, then remove; in this way all the grains of sugar adhereing to the sides of the basin are washed down.
-  isbn_t:
+  alternative_title_tsim:
   - Twelve pounds of sugar, two quarts of water, stir until dissolved, then add one full teaspoon of cream of tartar, (or if you wish to use glucose, add three pounds of same, do this when you are weighing your sugar, by hollowing out a place in the center of the sugar and pouring in the glucose). Now put on the steamer and let it remain until the batch begins to cook, then remove; in this way all the grains of sugar adhereing to the sides of the basin are washed down.
   timestamp:
   - '2015-11-18T21:09:30.2Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn60x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn59x
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn61x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - LEFT
-  page_num_label_s:
+  page_num_label_ssi:
   - 6
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - when it begins to boil, add six pounds of Almond Nuts, after haying picked out all shells and dusted the nuts thoroughly; stir slowly, keeping the sides of the basin well washed, until nuts are as brown as wished, and slide off the spatula easily when raised up
-  isbn_t:
+  alternative_title_tsim:
   - when it begins to boil, add six pounds of Almond Nuts, after haying picked out all shells and dusted the nuts thoroughly; stir slowly, keeping the sides of the basin well washed, until nuts are as brown as wished, and slide off the spatula easily when raised up
   timestamp:
   - '2015-11-19T21:09:44.574Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn61x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn60x
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn62x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - RIGHT
-  page_num_label_s:
+  page_num_label_ssi:
   - 7
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - These Caramel receipts are the best in the worlds and the author questions the ability of any one to produce a Caramel that will excell them in any particular. After once making by either one of the following formulas, no other will be used, as they are worth a dozen times the price of this book, to any one wishing to give his trade a fine Caramel.
-  isbn_t:
+  alternative_title_tsim:
   - These Caramel receipts are the best in the worlds and the author questions the ability of any one to produce a Caramel that will excell them in any particular. After once making by either one of the following formulas, no other will be used, as they are worth a dozen times the price of this book, to any one wishing to give his trade a fine Caramel.
   timestamp:
   - '2015-11-20T21:09:44.574Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn62x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn61x
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn63x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - LEFT
-  page_num_label_s:
+  page_num_label_ssi:
   - 8
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - Same as Hickory-nut Cups, except make a center of almond paste, colored light green; when on the slab, add to the clear batch a few drops of red color, some Nectar flavor, and fold all together, pull on the hook to a bright pink, and finish as before.
-  isbn_t:
+  alternative_title_tsim:
   - Same as Hickory-nut Cups, except make a center of almond paste, colored light green; when on the slab, add to the clear batch a few drops of red color, some Nectar flavor, and fold all together, pull on the hook to a bright pink, and finish as before.
   timestamp:
   - '2015-11-21T21:09:44.574Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn63x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn62x
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn64x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - RIGHT
-  page_num_label_s:
+  page_num_label_ssi:
   - 9
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - as it looks cloudy, pour it out at once in a deep pan; this must be done quickly or it will become hard in the basin; when cold, remove it it from the pan in the same manner as the pan creams; mark it into bars or large squares for the counter.
-  isbn_t:
+  alternative_title_tsim:
   - as it looks cloudy, pour it out at once in a deep pan; this must be done quickly or it will become hard in the basin; when cold, remove it it from the pan in the same manner as the pan creams; mark it into bars or large squares for the counter.
   timestamp:
   - '2015-11-22T21:09:44.574Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn64x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn63x
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-  is_preceding_page_of_s:
+  is_preceding_page_of_ssi:
   - 7s75dn65x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - LEFT
-  page_num_label_s:
+  page_num_label_ssi:
   - 10
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - cut into small squares; cook just to a thread; remove and, with the spatula, work the syrup on the sides of the basin till it becomes cloudy; pour all on a wire sieve, having a pan under it to catch the syrup that drains from the Cocoanuts
-  isbn_t:
+  alternative_title_tsim:
   - cut into small squares; cook just to a thread; remove and, with the spatula, work the syrup on the sides of the basin till it becomes cloudy; pour all on a wire sieve, having a pan under it to catch the syrup that drains from the Cocoanuts
   timestamp:
   - '2015-11-23T21:09:44.574Z'
-- object_model_s:
+- object_model_ssi:
   - ImageFile
   id:
   - 7s75dn65x
-  is_file_of_s:
+  is_file_of_ssi:
   - 7s75dn48d
-  is_following_page_of_s:
+  is_following_page_of_ssi:
   - 7s75dn64x
-  is_page_of_s:
+  is_page_of_ssi:
   - 7s75dn48d
-#  is_preceding_page_of_s:
+#  is_preceding_page_of_ssi:
 #  - 7s75dn65x
-  page_type_s:
+  page_type_ssi:
   - Normal
-  hand_side_s:
+  hand_side_ssi:
   - RIGHT
-  page_num_label_s:
+  page_num_label_ssi:
   - 11
-  page_num_label_type_s:
+  page_num_label_type_ssi:
   - original
-  text:
+  all_text_timv:
   - Take of dipping Cream any number of pounds desired, say five; put it into a basin inside of another one containing water; place on the fire; stir the Cream until dissolved, but not thin; add a few drops of red color, and flavor Nectar or Strawberry
-  isbn_t:
+  alternative_title_tsim:
   - Take of dipping Cream any number of pounds desired, say five; put it into a basin inside of another one containing water; place on the fire; stir the Cream until dissolved, but not thin; add a few drops of red color, and flavor Nectar or Strawberry
   timestamp:
   - '2015-11-24T21:09:44.574Z'

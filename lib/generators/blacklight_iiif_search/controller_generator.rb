@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # adds controller-scope behavior to the implementing application
 require 'rails/generators'
 
@@ -24,8 +26,8 @@ module BlacklightIiifSearch
       inject_into_file "app/controllers/#{controller_name}_controller.rb", after: marker do
         "\n\n    # configuration for Blacklight IIIF Content Search
     config.iiif_search = {
-      full_text_field: 'text',
-      object_relation_field: 'is_page_of_s',
+      full_text_field: 'all_text_timv',
+      object_relation_field: 'is_page_of_ssi',
       supported_params: %w[q page],
       autocomplete_handler: 'iiif_suggest',
       suggester_name: 'iiifSuggester'

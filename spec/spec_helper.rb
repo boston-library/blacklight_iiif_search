@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # testing environent:
 ENV['RAILS_ENV'] ||= 'test'
 

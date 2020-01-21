@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # insert routing for IIIF Content Search
 require 'rails/generators'
 
@@ -10,16 +12,16 @@ module BlacklightIiifSearch
 
     # Add CommonwealthVlrEngine to the routes
     def inject_iiif_search_routes
-      unless IO.read('config/routes.rb').include?('BlacklightIiifSearch::Routes')
-        marker = 'Rails.application.routes.draw do'
-        inject_into_file 'config/routes.rb', after: marker do
-          "\n\n  concern :iiif_search, BlacklightIiifSearch::Routes.new"
-        end
-        # for blacklight_range_limit
-        bl_routes_marker = /resources :solr_documents[\S\s]*controller: 'catalog' do[\s]*concerns :exportable.*$/
-        inject_into_file 'config/routes.rb', after: bl_routes_marker do
-          "\n    concerns :iiif_search"
-        end
+      return if IO.read('config/routes.rb').include?('BlacklightIiifSearch::Routes')
+
+      marker = 'Rails.application.routes.draw do'
+      inject_into_file 'config/routes.rb', after: marker do
+        "\n\n  concern :iiif_search, BlacklightIiifSearch::Routes.new"
+      end
+      # for blacklight_range_limit
+      bl_routes_marker = /resources :solr_documents[\S\s]*controller: 'catalog' do[\s]*concerns :exportable.*$/
+      inject_into_file 'config/routes.rb', after: bl_routes_marker do
+        "\n    concerns :iiif_search"
       end
     end
   end

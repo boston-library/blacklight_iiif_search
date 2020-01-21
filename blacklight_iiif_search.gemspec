@@ -18,15 +18,13 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency 'rails', '>= 4.2', '< 6'
-  s.add_dependency 'blacklight', '~> 6.0'
+  s.add_dependency 'rails', '>= 5.1', '< 7'
+  s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'iiif-presentation'
 
   s.add_development_dependency 'rspec-rails', '~> 3.0'
   s.add_development_dependency 'solr_wrapper', '~> 2.0'
-  s.add_development_dependency 'engine_cart'
+  s.add_development_dependency 'engine_cart', '~> 2.1'
   s.add_development_dependency 'byebug'
-  s.add_development_dependency 'rubocop', '~> 0.50.0'
-  s.add_development_dependency 'rubocop-rspec', '~> 1.18.0'
-  s.add_development_dependency 'bixby'
+  s.add_development_dependency 'bixby', '~> 1.0.0'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # IiifSuggestSearch
 module BlacklightIiifSearch
   class IiifSuggestSearch
@@ -28,10 +30,12 @@ module BlacklightIiifSearch
     ##
     # Query the suggest handler
     # @return [RSolr::HashWithResponse]
+    # rubocop:disable Style/HashSyntax
     def suggest_results
       suggest_params = { q: query, :'suggest.cfq' => document_id }
       repository.connection.send_and_receive(iiif_config[:autocomplete_handler],
                                              params: suggest_params)
     end
+    # rubocop:enable Style/HashSyntax
   end
 end

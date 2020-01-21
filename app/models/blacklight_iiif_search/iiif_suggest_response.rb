@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # corresponds to a IIIF search:TermList
 module BlacklightIiifSearch
   class IiifSuggestResponse

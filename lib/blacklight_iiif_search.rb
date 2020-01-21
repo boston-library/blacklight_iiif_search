@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # BlacklightIiifSearch
 module BlacklightIiifSearch
   require 'blacklight_iiif_search/version'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'iiif_search_shared'
 RSpec.describe BlacklightIiifSearch::IiifSearchAnnotation do
   include_context 'iiif_search_shared'
@@ -13,24 +15,24 @@ RSpec.describe BlacklightIiifSearch::IiifSearchAnnotation do
   end
 
   describe '#as_hash' do
-    subject { iiif_search_annotation.as_hash }
+    subject(:anno_as_hash) { iiif_search_annotation.as_hash }
     it 'returns the correct object' do
-      expect(subject.class).to eq(IIIF::Presentation::Annotation)
+      expect(anno_as_hash.class).to eq(IIIF::Presentation::Annotation)
     end
     it 'has a text resource' do
-      expect(subject.resource.class).to eq(IIIF::Presentation::Resource)
+      expect(anno_as_hash.resource.class).to eq(IIIF::Presentation::Resource)
     end
     it 'has an "on" property' do
-      expect(subject['on']).not_to be_blank
+      expect(anno_as_hash['on']).not_to be_blank
     end
   end
 
   describe '#text_resource_for_annotation' do
-    subject { iiif_search_annotation.text_resource_for_annotation }
+    subject(:text_resource) { iiif_search_annotation.text_resource_for_annotation }
     it 'returns the correct object' do
-      expect(subject.class).to eq(IIIF::Presentation::Resource)
-      expect(subject['chars']).to include(query_term)
-      expect(subject['chars']).not_to include('<em>')
+      expect(text_resource.class).to eq(IIIF::Presentation::Resource)
+      expect(text_resource['chars']).to include(query_term)
+      expect(text_resource['chars']).not_to include('<em>')
     end
   end
 end
