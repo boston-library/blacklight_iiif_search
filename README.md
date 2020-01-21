@@ -27,6 +27,7 @@ Blacklight/Solr Version Compatibility:
 
 blacklight_iiif_search version | works with Blacklight | works with Solr
 ----------------------- | --------------------- | -----------
+2.0 | ~> 7.0 | 7.*
 1.0 | >= 6.3.0 to < 7.* | 7.*
 
 ## Installation
