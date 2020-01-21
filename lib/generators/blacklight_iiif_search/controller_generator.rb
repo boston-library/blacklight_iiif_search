@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # adds controller-scope behavior to the implementing application
 require 'rails/generators'
 

@@ -1,0 +1,34 @@
+inherit_gem:
+  bixby: bixby_default.yml
+
+AllCops:
+  TargetRubyVersion: 2.5
+  DisplayCopNames: true
+  Include:
+    - '**/Rakefile'
+  Exclude:
+    - '.internal_test_app/**/*'
+    - 'blacklight_iiif_search.gemspec'
+    - 'Gemfile'
+
+Rails:
+  Enabled: true
+
+Layout/IndentationWidth:
+  Exclude:
+    - 'app/controllers/concerns/blacklight_iiif_search/controller.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/models/blacklight_iiif_search/iiif_search_response.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - 'spec/**/*'
+    - 'lib/generators/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'app/models/blacklight_iiif_search/iiif_search_response.rb'
+    - 'lib/generators/**/*'

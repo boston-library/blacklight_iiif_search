@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'iiif_search_shared'
 RSpec.describe CatalogController do
   include_context 'iiif_search_shared'
@@ -18,11 +20,11 @@ RSpec.describe CatalogController do
     end
 
     describe '#iiif_search_config' do
-      subject { controller.iiif_search_config }
+      subject(:iiif_search_config) { controller.iiif_search_config }
       it 'returns the iiif_search config' do
-        expect(subject[:full_text_field]).to_not be_falsey
-        expect(subject[:object_relation_field]).to_not be_falsey
-        expect(subject[:supported_params]).to_not be_empty
+        expect(iiif_search_config[:full_text_field]).not_to be_falsey
+        expect(iiif_search_config[:object_relation_field]).not_to be_falsey
+        expect(iiif_search_config[:supported_params]).not_to be_empty
       end
     end
 
@@ -31,10 +33,10 @@ RSpec.describe CatalogController do
         controller.params = { q: query_term, foo: 'bar' }
       end
 
-      subject { controller.iiif_search_params }
+      subject(:iiif_search_params) { controller.iiif_search_params }
       it 'only returns the permitted params' do
-        expect(subject.include?(:q)).to be_truthy
-        expect(subject.include?(:foo)).to be_falsey
+        expect(iiif_search_params.include?(:q)).to be_truthy
+        expect(iiif_search_params.include?(:foo)).to be_falsey
       end
     end
 
@@ -45,13 +47,13 @@ RSpec.describe CatalogController do
       end
 
       describe '#set_search_builder' do
-        it 'should use IiifSearchBuilder' do
+        it 'uses IiifSearchBuilder' do
           expect(controller.blacklight_config.search_builder_class).to eq(IiifSearchBuilder)
         end
       end
 
       describe '#set_access_headers' do
-        it 'should set the access control header' do
+        it 'sets the access control header' do
           expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
         end
       end

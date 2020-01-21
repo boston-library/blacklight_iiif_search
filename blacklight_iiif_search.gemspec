@@ -26,7 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'solr_wrapper', '~> 2.0'
   s.add_development_dependency 'engine_cart', '~> 2.1'
   s.add_development_dependency 'byebug'
-  s.add_development_dependency 'rubocop', '~> 0.63.0'
-  s.add_development_dependency 'rubocop-rspec', '~> 1.8'
-  s.add_development_dependency 'bixby'
+  s.add_development_dependency 'bixby', '~> 1.0.0'
 end

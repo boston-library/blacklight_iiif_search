@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # return a IIIF Content Search response
 module BlacklightIiifSearch
   module Controller
@@ -14,7 +16,7 @@ module BlacklightIiifSearch
                                    @parent_document)
       iiif_search_service = search_service_class.new(config: blacklight_config,
                                                      user_params: iiif_search.solr_params)
-      @response, _document_list = iiif_search_service.search_results #(iiif_search.solr_params)
+      @response, _document_list = iiif_search_service.search_results
       iiif_search_response = IiifSearchResponse.new(@response,
                                                     @parent_document,
                                                     self)

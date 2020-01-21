@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # returns ignored params
 module BlacklightIiifSearch
   module Ignored

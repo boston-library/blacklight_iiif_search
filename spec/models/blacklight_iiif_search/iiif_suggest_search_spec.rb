@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'iiif_search_shared'
 RSpec.describe BlacklightIiifSearch::IiifSuggestSearch do
   include_context 'iiif_search_shared'
@@ -9,26 +11,26 @@ RSpec.describe BlacklightIiifSearch::IiifSuggestSearch do
   end
 
   describe '#response' do
-    subject { iiif_suggest_search.response }
+    subject(:suggest_response) { iiif_suggest_search.response }
 
     it 'returns the correct class' do
-      expect(subject.class).to eq(IIIF::OrderedHash)
+      expect(suggest_response.class).to eq(IIIF::OrderedHash)
     end
 
     it 'returns the expected data' do
-      expect(subject['terms'].length).to eq(5)
+      expect(suggest_response['terms'].length).to eq(5)
     end
   end
 
   describe '#suggest_results' do
-    subject { iiif_suggest_search.suggest_results }
+    subject(:suggest_results) { iiif_suggest_search.suggest_results }
 
     it 'returns the correct class' do
-      expect(subject.class).to eq(RSolr::HashWithResponse)
+      expect(suggest_results.class).to eq(RSolr::HashWithResponse)
     end
 
     it 'returns the expected data' do
-      terms = subject['suggest'][blacklight_config.iiif_search[:suggester_name]][suggest_query_term]['suggestions']
+      terms = suggest_results['suggest'][blacklight_config.iiif_search[:suggester_name]][suggest_query_term]['suggestions']
       expect(terms.length).to eq(5)
       expect(terms.first['term'].match(/\A#{suggest_query_term}/)).to be_truthy
     end

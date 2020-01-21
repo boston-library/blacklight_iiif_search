@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'iiif_search_shared'
 RSpec.describe BlacklightIiifSearch::Ignored do
   include_context 'iiif_search_shared'

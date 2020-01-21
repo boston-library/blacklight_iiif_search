@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # shared variables that can be used across specs
 # https://relishapp.com/rspec/rspec-core/docs/example-groups/shared-context
 RSpec.shared_context 'iiif_search_shared' do

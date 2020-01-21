@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # install BlacklightIiifSearch behavior into implementing application
 require 'rails/generators'
 
@@ -8,8 +10,7 @@ module BlacklightIiifSearch
     argument :search_builder_name, type: :string, default: 'search_builder'
     argument :controller_name, type: :string, default: 'catalog'
 
-    class_option :'skip-solr', type: :boolean,
-                 default: false, desc: 'Skip generating Solr configurations.'
+    class_option :'skip-solr', type: :boolean, default: false, desc: 'Skip generating Solr configurations.'
 
     desc <<-EOS
       Install generator for Blacklight IIIF Search
