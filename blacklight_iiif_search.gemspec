@@ -10,13 +10,17 @@ Gem::Specification.new do |s|
   s.version     = BlacklightIiifSearch::VERSION
   s.authors     = ['Eben English']
   s.email       = ['eenglish@bpl.org']
-  s.homepage    = 'http://projectblacklight.org/'
+  s.homepage    = 'https://github.com/boston-library/blacklight_iiif_search'
   s.summary     = 'Blacklight IIIF Search plugin'
   s.description = 'Blacklight IIIF Search plugin'
   s.license     = 'Apache-2.0'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['spec/**/*']
+  s.source
+
+  s.metadata["homepage_uri"] = s.homepage
+  s.metadata["source_code_uri"] = s.homepage
 
   s.add_dependency 'rails', '>= 5.1', '< 7'
   s.add_dependency 'blacklight', '~> 7.0'
