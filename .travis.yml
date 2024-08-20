@@ -1,6 +1,6 @@
 language: ruby
 sudo: false
-dist: jammy
+dist: focal
 
 addons:
   chrome: stable
