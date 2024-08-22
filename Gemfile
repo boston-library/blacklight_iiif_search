@@ -4,6 +4,7 @@ gemspec
 
 group :development, :test do
   gem 'coveralls', require: false
+  gem 'ffi', '< 1.17.0' # https://github.com/ffi/ffi/issues/1103
 end
 
 # To use a debugger

@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.metadata["homepage_uri"] = s.homepage
   s.metadata["source_code_uri"] = s.homepage
 
-  s.add_dependency 'rails', '>= 5.1', '< 7'
+  s.add_dependency 'rails', '>= 6', '< 7.3'
   s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'iiif-presentation'
 
