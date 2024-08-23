@@ -26,11 +26,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'blacklight', '~> 7.0'
   s.add_dependency 'iiif-presentation'
   s.add_dependency 'ffi', '~> 1.16.3' # https://github.com/ffi/ffi/issues/1103
-  s.add_dependency 'sqlite', '~> 1.6.9'
 
   s.add_development_dependency 'rspec-rails', '~> 3.0'
   s.add_development_dependency 'solr_wrapper', '~> 4.0'
   s.add_development_dependency 'engine_cart', '~> 2.1'
   s.add_development_dependency 'byebug'
-  s.add_development_dependency 'bixby', '~> 1.0.0'
+  s.add_development_dependency 'bixby', '~> 4.0.0'
 end

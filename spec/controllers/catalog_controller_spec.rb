@@ -66,7 +66,7 @@ RSpec.describe CatalogController do
         get :iiif_search,
             params: { q: query_term, solr_document_id: parent_id }
       end
-      let(:json) { JSON.parse(response.body) }
+      let(:json) { response.parsed_body }
 
       it 'returns a response' do
         expect(response.code).to eq '200'
@@ -85,7 +85,7 @@ RSpec.describe CatalogController do
         get :iiif_suggest,
             params: { q: suggest_query_term, solr_document_id: parent_id }
       end
-      let(:json) { JSON.parse(response.body) }
+      let(:json) { response.parsed_body }
 
       it 'returns a response' do
         expect(response.code).to eq '200'
