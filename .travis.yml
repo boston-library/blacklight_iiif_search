@@ -18,4 +18,4 @@ matrix:
       env: "RAILS_VERSION=7.0.8.4"
 fast_finish: true
 
-jdk: openjdk17
+jdk: openjdk11
