@@ -46,7 +46,7 @@ module BlacklightIiifSearch
       @total = 0
       solr_response['highlighting'].each do |id, hl_hash|
         hit = { '@type': 'search:Hit', 'annotations': [] }
-        document = solr_response.documents.select { |v| v[:id] == id }.first
+        document = solr_response.documents.find { |v| v[:id] == id }
         if hl_hash.empty?
           @total += 1
           annotation = IiifSearchAnnotation.new(document,
