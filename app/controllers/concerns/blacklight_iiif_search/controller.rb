@@ -11,23 +11,19 @@ module BlacklightIiifSearch
     end
 
     def iiif_search
-      _parent_response, @parent_document = search_service.fetch(params[:solr_document_id])
-      iiif_search = IiifSearch.new(iiif_search_params, iiif_search_config,
-                                   @parent_document)
+      @parent_document = search_service.fetch(params[:solr_document_id])
+      iiif_search = IiifSearch.new(iiif_search_params, iiif_search_config, @parent_document)
       iiif_search_service = search_service_class.new(config: blacklight_config,
                                                      user_params: iiif_search.solr_params)
-      @response, _document_list = iiif_search_service.search_results
-      iiif_search_response = IiifSearchResponse.new(@response,
-                                                    @parent_document,
-                                                    self)
-      render json: iiif_search_response.annotation_list,
-             content_type: 'application/json'
+      @response = iiif_search_service.search_results
+      iiif_search_response = IiifSearchResponse.new(@response, @parent_document, self)
+
+      render json: iiif_search_response.annotation_list, content_type: 'application/json'
     end
 
     def iiif_suggest
       suggest_search = IiifSuggestSearch.new(params, Blacklight.default_index, self)
-      render json: suggest_search.response,
-             content_type: 'application/json'
+      render json: suggest_search.response, content_type: 'application/json'
     end
 
     def iiif_search_config

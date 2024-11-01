@@ -10,7 +10,7 @@ module BlacklightIiifSearch
     desc 'This generator makes the following changes to your app:
         1. Injects route declarations into your routes.rb'
 
-    # Add CommonwealthVlrEngine to the routes
+    # Add BlacklightIiifSearch to the routes
     def inject_iiif_search_routes
       return if IO.read('config/routes.rb').include?('BlacklightIiifSearch::Routes')
 
