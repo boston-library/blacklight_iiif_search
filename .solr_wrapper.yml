@@ -2,6 +2,10 @@
 # you must first run 'rake engine_cart:generate' to create the test app
 # before running 'solr_wrapper' from project root
 # port: 8983
+
+# Solr > 7 doesn't work, tokenizing-suggest-v1.0.1.jar not compatible
+# version: 8.11.2
+
 version: 7.7.3
 collection:
   dir: ./.internal_test_app/solr/conf/
