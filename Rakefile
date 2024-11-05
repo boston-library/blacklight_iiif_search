@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rubygems'
+require 'rails'
 begin
   require 'bundler/setup'
 rescue LoadError
