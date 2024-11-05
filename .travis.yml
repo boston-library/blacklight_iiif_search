@@ -7,6 +7,8 @@ addons:
 
 before_install:
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
+  - gem update --system --no-document
+  - gem install bundler:2.5.19 --no-document
 
 global_env:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
