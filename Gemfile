@@ -22,6 +22,8 @@ if File.exist?(file)
     Bundler.ui.warn e.message
   end
 else
+  Bundler.ui.warn "CURRENT DIR: #{system 'pwd'}"
+  Bundler.ui.warn "WHAT IS IN INTERNAL_TEST_APP: #{system('ls ' + file.split('/')[0..-2].join('/'))}"
   Bundler.ui.warn "[EngineCart] Unable to find test application dependencies in #{file}, using placeholder dependencies"
   if ENV['RAILS_VERSION']
     if ENV['RAILS_VERSION'] == 'edge'
