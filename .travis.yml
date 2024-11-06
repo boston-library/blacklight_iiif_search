@@ -8,11 +8,11 @@ addons:
 before_install:
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
   - gem update --system --no-document
-  - gem install bundler:2.5.19 --no-document
+  - gem install bundler:2.4.22 --no-document
 
 global_env:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-  - ENGINE_CART_RAILS_OPTIONS='--skip-git --skip-listen --skip-spring --skip-keeps --skip-action-cable --skip-coffee --skip-test'
+  - ENGINE_CART_RAILS_OPTIONS='--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test'
 
 matrix:
   include:
