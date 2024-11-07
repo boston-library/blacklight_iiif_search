@@ -22,11 +22,11 @@ if File.exist?(file)
     Bundler.ui.warn e.message
   end
 else
-  Bundler.ui.warn "ENGINE_CART_DESTINATION: #{ENV.fetch('ENGINE_CART_DESTINATION') { 'ENGINE_CART_DESTINATION NOT SET' }}"
-  Bundler.ui.warn "RAILS_ROOT: #{ENV.fetch('RAILS_ROOT') { 'RAILS_ROOT NOT SET' }}"
-  Bundler.ui.warn "FILE EXPAND PATH = #{File.expand_path('.internal_test_app', File.dirname(__FILE__))}"
-  Bundler.ui.warn "CURRENT DIR: #{system 'pwd'}"
-  Bundler.ui.warn "WHAT IS IN INTERNAL_TEST_APP: #{system('ls ' + file.split('/')[0..-2].join('/'))}"
+  # Bundler.ui.warn "ENGINE_CART_DESTINATION: #{ENV.fetch('ENGINE_CART_DESTINATION') { 'ENGINE_CART_DESTINATION NOT SET' }}"
+  # Bundler.ui.warn "RAILS_ROOT: #{ENV.fetch('RAILS_ROOT') { 'RAILS_ROOT NOT SET' }}"
+  # Bundler.ui.warn "FILE EXPAND PATH = #{File.expand_path('.internal_test_app', File.dirname(__FILE__))}"
+  # Bundler.ui.warn "CURRENT DIR: #{system 'pwd'}"
+  # Bundler.ui.warn "WHAT IS IN INTERNAL_TEST_APP: #{system('ls ' + file.split('/')[0..-2].join('/'))}"
   Bundler.ui.warn "[EngineCart] Unable to find test application dependencies in #{file}, using placeholder dependencies"
   if ENV['RAILS_VERSION']
     if ENV['RAILS_VERSION'] == 'edge'
