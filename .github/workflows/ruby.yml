@@ -14,11 +14,11 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.0']
-        rails_version: ["6.1.7.8"]
+        ruby-version: ['3.1']
+        rails_version: ["7.0.8.4"]
     env:
       ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test"
     steps:
