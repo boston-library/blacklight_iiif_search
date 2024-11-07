@@ -25,6 +25,10 @@ module BlacklightIiifSearch
     def verify_blacklight_installed
       return if IO.read('app/controllers/application_controller.rb').include?('include Blacklight::Controller')
       say_status('info', 'BLACKLIGHT NOT INSTALLED; GENERATING BLACKLIGHT', :blue)
+
+      say_status('info', 'APP GEMFILE LOOKS LIKE:')
+      system 'pwd'
+      system 'cat ./../../../Gemfile'
       generate 'blacklight:install'
     end
 
