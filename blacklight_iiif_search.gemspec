@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.metadata["homepage_uri"] = s.homepage
   s.metadata["source_code_uri"] = s.homepage
 
+  s.required_ruby_version = '>= 2.7'
+
   s.add_dependency 'rails', '>= 6.1', '< 8'
   s.add_dependency 'blacklight', '~> 8.0'
   s.add_dependency 'iiif-presentation'
