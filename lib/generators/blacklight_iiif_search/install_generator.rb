@@ -18,7 +18,7 @@ module BlacklightIiifSearch
        1. Injects behavior into CatalogController
        2. Adds a SearchBuilder to ./app/models
        3. Adds BlacklightIiifSearch routes to ./config/routes.rb
-       4. Modifies solrconfig.xml to support contextual autocomplete functionality
+       4. Modifies Solr schema.xml and solrconfig.xml to support contextual autocomplete functionality
       Thanks for installing Blacklight IIIF Search!
     EOS
 
@@ -26,10 +26,6 @@ module BlacklightIiifSearch
       return if IO.read('app/controllers/application_controller.rb').include?('include Blacklight::Controller')
       say_status('info', 'BLACKLIGHT NOT INSTALLED; GENERATING BLACKLIGHT', :blue)
 
-      # say_status('info', 'TEST APP GEMFILE LOOKS LIKE:')
-      # system 'pwd'
-      # system 'cat ./Gemfile'
-      # system 'cat ./Gemfile.lock'
       generate 'blacklight:install'
     end
 
@@ -50,7 +46,7 @@ module BlacklightIiifSearch
     end
 
     def bundle_install
-      Bundler.with_clean_env do
+      Bundler.with_unbundled_env do
         run 'bundle install'
       end
     end

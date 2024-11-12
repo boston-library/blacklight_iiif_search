@@ -1,6 +1,6 @@
 # Blacklight IIIF Search
 
-[![Build Status](https://travis-ci.org/boston-library/blacklight_iiif_search.png?branch=master)](https://travis-ci.org/boston-library/blacklight_iiif_search) [![Coverage Status](https://coveralls.io/repos/github/boston-library/blacklight_iiif_search/badge.svg?branch=master)](https://coveralls.io/github/boston-library/blacklight_iiif_search?branch=master)
+![CI Workflow](https://github.com/boston-library/blacklight_iiif_search/actions/workflows/ruby.yml/badge.svg)
 
 A plugin that provides IIIF Content Search functionality for [Blacklight](https://github.com/projectblacklight/blacklight)-based applications.
 
@@ -25,10 +25,12 @@ This plugin assumes:
 
 Blacklight/Solr Version Compatibility:
 
-blacklight_iiif_search version | works with Blacklight | works with Solr
------------------------ | --------------------- | -----------
-2.0 | ~> 7.0 | 7.*
-1.0 | >= 6.3.0 to < 7.* | 7.*
+| blacklight_iiif_search version | works with Blacklight | works with Solr |
+|--------------------------------|-----------------------|-----------------|
+| 3.0                            | ~> 8.0                | >= 7.0 to < 9.* |
+| 2.0                            | ~> 7.0                | 7.*             |
+| 1.0                            | >= 6.3.0 to < 7.*     | 7.*             |
+
 
 ## Installation
 
@@ -89,6 +91,8 @@ Would return:
 ```
 http://host:port/catalog/abcd1234/iiif_suggest?q=blacklight
 ```
+
+_NOTE: In Solr 8.*, the autocomplete suggester service returns the entire field value, not a single term. Single-term autocomplete suggestions are possible with Solr 7.*._
 
 ## Implementation
 In order to successfully deploy this plugin, you'll most likely need to customize a few things to match how your Solr index and/or repository are set up.
@@ -153,7 +157,8 @@ For IIIF Content Search autocomplete behavior, we want to limit the suggestions 
 
 This is best set up as a separate `<searchComponent>` from any existing autocomplete/suggest functionality that may already be defined in your Solr configuration. The install generator will create a new `<searchComponent>` in solrconfig.xml and several field definitions in the schema.xml file to support the autocomplete behavior. You may need to customize these settings for your implementation.
 
-You also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory. This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
+**For Solr 7.* only**, you also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory. 
+This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
 
 _Note_: It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
 ```
@@ -171,26 +176,27 @@ $ rake engine_cart:generate
 ```
 $ solr_wrapper
 ```
-This will throw an error, since the Solr config will look for a library that doesn't exist yet.
-3. Copy the `tokenizing-suggest-v1.0.1.jar` library to Solr's `contrib` directory:
+
+3. If running Solr 7.*, copy the `tokenizing-suggest-v1.0.1.jar` library to Solr's `contrib` directory:
 ```
+# first, stop solr_wrapper (Ctrl-C)
 $ cp ./lib/generators/blacklight_iiif_search/templates/solr/lib/tokenizing-suggest-v1.0.1.jar /path/to/solr/contrib
-```
-4. Start up Solr again (run from same new terminal window):
-```
+# then uncomment the 'tokenizing-suggest' lines in .internal_test_app/solr/conf/solrconfig.xml
+# restart solr_wrapper
 $ solr_wrapper
 ```
-5. Index sample documents into Solr (run from `./.internal_test_app`):
+
+4. Index sample documents into Solr (run from `./.internal_test_app`):
 ```
 $ RAILS_ENV=test rake blacklight_iiif_search:index:seed
 ```
-6. Start up the Rails server (run from `./.internal_test_app`):
+5. Start up the Rails server (run from `./.internal_test_app`):
 ```
 $ rails s
 ```
-7. In a browser, go to: `http://127.0.0.1:3000`. You should see the default Blacklight home page.
-8. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=sugar`
-9. Test a sample autocomplete request: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=be`
+6. In a browser, go to: `http://127.0.0.1:3000`. You should see the default Blacklight home page.
+7. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=sugar`
+8. Test a sample autocomplete request: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=be`
 
 To see how search snippets work, change the value of the `full_text_field` config to `alternative_title_tsim` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
 
