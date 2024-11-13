@@ -12,10 +12,8 @@ By integrating the URL for this service into your IIIF Presentation manifests, c
 
 ## Prerequisites
 
-Currently highly opinionated towards Solr as the back-end search index.
-
 This plugin assumes:
-1. You have a working Blacklight application
+1. You have a working Blacklight application, with Solr as the search index
 2. You have items with full text (e.g. scanned books, newspapers, etc.) in your Solr index
 3. The text for these items is indexed in Solr
 4. Each page has its own Solr record, with the corresponding text in a discrete field 
@@ -25,11 +23,11 @@ This plugin assumes:
 
 Blacklight/Solr Version Compatibility:
 
-| blacklight_iiif_search version | works with Blacklight | works with Solr |
-|--------------------------------|-----------------------|-----------------|
-| 3.0                            | ~> 8.0                | >= 7.0 to < 9.* |
-| 2.0                            | ~> 7.0                | 7.*             |
-| 1.0                            | >= 6.3.0 to < 7.*     | 7.*             |
+| blacklight_iiif_search version | works with Blacklight | tested with Solr |
+|--------------------------------|-----------------------|------------------|
+| 3.0                            | ~> 8.0                | >= 7.0 to < 9.*  |
+| 2.0                            | ~> 7.0                | 7.*              |
+| 1.0                            | >= 6.3.0 to < 7.*     | 7.*              |
 
 
 ## Installation
@@ -91,8 +89,6 @@ Would return:
 ```
 http://host:port/catalog/abcd1234/iiif_suggest?q=blacklight
 ```
-
-_NOTE: In Solr 8.*, the autocomplete suggester service returns the entire field value, not a single term. Single-term autocomplete suggestions are possible with Solr 7.*._
 
 ## Implementation
 In order to successfully deploy this plugin, you'll most likely need to customize a few things to match how your Solr index and/or repository are set up.
@@ -157,10 +153,14 @@ For IIIF Content Search autocomplete behavior, we want to limit the suggestions 
 
 This is best set up as a separate `<searchComponent>` from any existing autocomplete/suggest functionality that may already be defined in your Solr configuration. The install generator will create a new `<searchComponent>` in solrconfig.xml and several field definitions in the schema.xml file to support the autocomplete behavior. You may need to customize these settings for your implementation.
 
-**For Solr 7.* only**, you also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory. 
+In Solr 8., the autocomplete suggester service currently returns the entire field value, not a single term. Single-term autocomplete suggestions are possible with Solr 7.
+
+To enable single-term autocomplete in Solr 7, you also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory (see steps in Test Drive below). 
 This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
 
-_Note_: It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
+(The `tokenizing-suggest-v1.0.1.jar` library is not currently compatible with Solr > 7. Further development needed, pull requests welcome!)
+
+It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
 ```
 http://host:port/solr/[core_name]/iiif_suggest?wt=json&suggest.cfq=[parent_identifier]&q=[query_term]
 ```
@@ -211,7 +211,7 @@ After cloning the repository, and running `bundle install`, run `rake ci` from t
 
 ## Credits
 
-This project was developed as part of the [Newspapers in Samvera](https://www.imls.gov/grants/awarded/lg-70-17-0043-17) grant. Thanks to the Institute of Museum and Library Services for their support.
+This project was originally developed as part of the [Newspapers in Samvera](https://www.imls.gov/grants/awarded/lg-70-17-0043-17) grant. Thanks to the Institute of Museum and Library Services for their support.
 
 Inspiration for this code was drawn from Stanford University Digital Library's [content_search](https://github.com/sul-dlss/content_search) and NCSU Libraries' [ocracoke](https://github.com/NCSU-Libraries/ocracoke).
 
