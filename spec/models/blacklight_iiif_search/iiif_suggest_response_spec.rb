@@ -30,7 +30,7 @@ RSpec.describe BlacklightIiifSearch::IiifSuggestResponse do
     it 'returns the expected data' do
       expect(response_terms.length).to eq(5)
       expect(response_terms.first[:url]).not_to be_falsey
-      expect(response_terms.first[:match].match(/\A#{suggest_query_term}/)).to be_truthy
+      expect(response_terms.first[:match].match(/#{suggest_query_term}/)).to be_truthy
     end
   end
 

@@ -1,6 +1,6 @@
 # Blacklight IIIF Search
 
-[![Build Status](https://travis-ci.org/boston-library/blacklight_iiif_search.png?branch=master)](https://travis-ci.org/boston-library/blacklight_iiif_search) [![Coverage Status](https://coveralls.io/repos/github/boston-library/blacklight_iiif_search/badge.svg?branch=master)](https://coveralls.io/github/boston-library/blacklight_iiif_search?branch=master)
+![CI Workflow](https://github.com/boston-library/blacklight_iiif_search/actions/workflows/ruby.yml/badge.svg)
 
 A plugin that provides IIIF Content Search functionality for [Blacklight](https://github.com/projectblacklight/blacklight)-based applications.
 
@@ -12,10 +12,8 @@ By integrating the URL for this service into your IIIF Presentation manifests, c
 
 ## Prerequisites
 
-Currently highly opinionated towards Solr as the back-end search index.
-
 This plugin assumes:
-1. You have a working Blacklight application
+1. You have a working Blacklight application, with Solr as the search index
 2. You have items with full text (e.g. scanned books, newspapers, etc.) in your Solr index
 3. The text for these items is indexed in Solr
 4. Each page has its own Solr record, with the corresponding text in a discrete field 
@@ -25,10 +23,12 @@ This plugin assumes:
 
 Blacklight/Solr Version Compatibility:
 
-blacklight_iiif_search version | works with Blacklight | works with Solr
------------------------ | --------------------- | -----------
-2.0 | ~> 7.0 | 7.*
-1.0 | >= 6.3.0 to < 7.* | 7.*
+| blacklight_iiif_search version | works with Blacklight | tested with Solr |
+|--------------------------------|-----------------------|------------------|
+| 3.0                            | ~> 8.0                | >= 7.0 to < 9.*  |
+| 2.0                            | ~> 7.0                | 7.*              |
+| 1.0                            | >= 6.3.0 to < 7.*     | 7.*              |
+
 
 ## Installation
 
@@ -153,9 +153,14 @@ For IIIF Content Search autocomplete behavior, we want to limit the suggestions 
 
 This is best set up as a separate `<searchComponent>` from any existing autocomplete/suggest functionality that may already be defined in your Solr configuration. The install generator will create a new `<searchComponent>` in solrconfig.xml and several field definitions in the schema.xml file to support the autocomplete behavior. You may need to customize these settings for your implementation.
 
-You also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory. This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
+In Solr 8., the autocomplete suggester service currently returns the entire field value, not a single term. Single-term autocomplete suggestions are possible with Solr 7.
 
-_Note_: It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
+To enable single-term autocomplete in Solr 7, you also need to add the `tokenizing-suggest-v1.0.1.jar` library to your Solr install's `contrib` directory (see steps in Test Drive below). 
+This library is needed so that Solr will return single terms for autocomplete queries, rather than the entire full text field.
+
+(The `tokenizing-suggest-v1.0.1.jar` library is not currently compatible with Solr > 7. Further development needed, pull requests welcome!)
+
+It's often helpful to test Solr directly to make sure autocomplete is working properly, this can be done like so:
 ```
 http://host:port/solr/[core_name]/iiif_suggest?wt=json&suggest.cfq=[parent_identifier]&q=[query_term]
 ```
@@ -171,26 +176,27 @@ $ rake engine_cart:generate
 ```
 $ solr_wrapper
 ```
-This will throw an error, since the Solr config will look for a library that doesn't exist yet.
-3. Copy the `tokenizing-suggest-v1.0.1.jar` library to Solr's `contrib` directory:
+
+3. If running Solr 7.*, copy the `tokenizing-suggest-v1.0.1.jar` library to Solr's `contrib` directory:
 ```
+# first, stop solr_wrapper (Ctrl-C)
 $ cp ./lib/generators/blacklight_iiif_search/templates/solr/lib/tokenizing-suggest-v1.0.1.jar /path/to/solr/contrib
-```
-4. Start up Solr again (run from same new terminal window):
-```
+# then uncomment the 'tokenizing-suggest' lines in .internal_test_app/solr/conf/solrconfig.xml
+# restart solr_wrapper
 $ solr_wrapper
 ```
-5. Index sample documents into Solr (run from `./.internal_test_app`):
+
+4. Index sample documents into Solr (run from `./.internal_test_app`):
 ```
 $ RAILS_ENV=test rake blacklight_iiif_search:index:seed
 ```
-6. Start up the Rails server (run from `./.internal_test_app`):
+5. Start up the Rails server (run from `./.internal_test_app`):
 ```
 $ rails s
 ```
-7. In a browser, go to: `http://127.0.0.1:3000`. You should see the default Blacklight home page.
-8. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=sugar`
-9. Test a sample autocomplete request: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=be`
+6. In a browser, go to: `http://127.0.0.1:3000`. You should see the default Blacklight home page.
+7. Test a sample search: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_search?q=sugar`
+8. Test a sample autocomplete request: `http://127.0.0.1:3000/catalog/7s75dn48d/iiif_suggest?q=be`
 
 To see how search snippets work, change the value of the `full_text_field` config to `alternative_title_tsim` in `./.internal_test_app/app/controllers/catalog_controller.rb`, and restart the Rails server.
 
@@ -205,7 +211,7 @@ After cloning the repository, and running `bundle install`, run `rake ci` from t
 
 ## Credits
 
-This project was developed as part of the [Newspapers in Samvera](https://www.imls.gov/grants/awarded/lg-70-17-0043-17) grant. Thanks to the Institute of Museum and Library Services for their support.
+This project was originally developed as part of the [Newspapers in Samvera](https://www.imls.gov/grants/awarded/lg-70-17-0043-17) grant. Thanks to the Institute of Museum and Library Services for their support.
 
 Inspiration for this code was drawn from Stanford University Digital Library's [content_search](https://github.com/sul-dlss/content_search) and NCSU Libraries' [ocracoke](https://github.com/NCSU-Libraries/ocracoke).
 

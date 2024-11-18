@@ -8,7 +8,7 @@ RSpec.describe BlacklightIiifSearch::IiifSearchResponse do
     controller.search_service_class.new(config: blacklight_config,
                                         user_params: iiif_search.solr_params)
   end
-  let(:solr_response) { iiif_search_service.search_results.first }
+  let(:solr_response) { iiif_search_service.search_results }
   let(:iiif_search_response) do
     described_class.new(solr_response, parent_document, controller)
   end

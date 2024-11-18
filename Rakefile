@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rubygems'
+require 'rails'
 begin
   require 'bundler/setup'
 rescue LoadError
@@ -36,8 +38,11 @@ RuboCop::RakeTask.new(:rubocop)
 desc 'Run test suite'
 task ci: [:rubocop, 'engine_cart:generate'] do
   SolrWrapper.wrap do |solr|
-    FileUtils.cp File.join(__dir__, 'lib', 'generators', 'blacklight_iiif_search', 'templates', 'solr', 'lib', 'tokenizing-suggest-v1.0.1.jar'),
-                 File.join(solr.instance_dir, 'contrib')
+    # single-term autocomplete via tokenizing-suggest currently requires Solr 7.*, see README.md for more info
+    if solr.version.to_f < 8
+      FileUtils.cp(File.join(__dir__, 'lib', 'generators', 'blacklight_iiif_search', 'templates', 'solr', 'lib', 'tokenizing-suggest-v1.0.1.jar'),
+                   File.join(solr.instance_dir, 'contrib'))
+    end
     solr.with_collection do
       within_test_app do
         system 'RAILS_ENV=test rake blacklight_iiif_search:index:seed'

@@ -16,8 +16,8 @@ RSpec.shared_context 'iiif_search_shared' do
   let(:suggest_search_params) do
     { q: suggest_query_term, solr_document_id: parent_id, date: 'foo' }
   end
-  let(:parent_document) { controller.search_service.fetch(parent_id)[1] }
-  let(:page_document) { controller.search_service.fetch(page_id)[1] }
+  let(:parent_document) { controller.search_service.fetch(parent_id) }
+  let(:page_document) { controller.search_service.fetch(page_id) }
   let(:repository) { Blacklight::Solr::Repository.new(blacklight_config) }
 
   let(:iiif_search) do
