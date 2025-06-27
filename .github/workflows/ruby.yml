@@ -15,7 +15,7 @@ permissions:
 jobs:
   test:
     name: test (ruby ${{ matrix.ruby }} / rails ${{ matrix.rails_version }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         ruby-version: ["3.1"]
@@ -32,6 +32,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler: "latest"
+      - name: Change permissions
+        run: "chmod -f -R o-w /opt/hostedtoolcache/Ruby/3.0.7/x64/lib/ruby/gems/3.0.0/gems | :"
       - name: Install dependencies
         run: bundle install
       - name: Run linter and tests
