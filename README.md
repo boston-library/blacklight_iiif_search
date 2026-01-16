@@ -61,6 +61,11 @@ Config option | Description
 `autocomplete_handler`   | The value of the @name attribute for the Solr `<requestHandler name="/#{autocomplete_handler}">` in solrconfig.xml that handles autocomplete suggestions.  
 `suggester_name`         | The value of the `<str name="name">#{suggester_name}</str>` element for the Solr <searchComponent> in solrconfig.xml that handles autocomplete suggestions.
 
+You may also need to add a facet field to allow Blacklight to pass the intended search parameters to Solr, for example:
+```ruby
+config.add_facet_field 'is_page_of_ssi', include_in_request: false
+```
+
 See below for additional customization options.
 
 ## Basic Usage
