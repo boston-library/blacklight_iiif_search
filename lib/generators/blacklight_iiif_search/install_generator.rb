@@ -26,7 +26,7 @@ module BlacklightIiifSearch
       return if IO.read('app/controllers/application_controller.rb').include?('include Blacklight::Controller')
       say_status('info', 'BLACKLIGHT NOT INSTALLED; GENERATING BLACKLIGHT', :blue)
 
-      generate 'blacklight:install'
+      generate 'blacklight:install --skip-assets'
     end
 
     def insert_to_controllers

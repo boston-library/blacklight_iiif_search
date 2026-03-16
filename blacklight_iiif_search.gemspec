@@ -24,11 +24,11 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.7'
 
-  s.add_dependency 'rails', '>= 6.1', '< 8'
+  s.add_dependency 'rails', '>= 6.1', '< 9'
   s.add_dependency 'blacklight', '~> 8.0'
   s.add_dependency 'iiif-presentation'
 
-  s.add_development_dependency 'rspec-rails', '>= 6.1', '< 8'
+  s.add_development_dependency 'rspec-rails', '>= 6.1', '< 9'
   s.add_development_dependency 'solr_wrapper', '~> 4.0'
   s.add_development_dependency 'engine_cart', '~> 2.1'
   s.add_development_dependency 'byebug'
