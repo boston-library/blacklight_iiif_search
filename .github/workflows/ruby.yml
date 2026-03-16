@@ -24,7 +24,7 @@ jobs:
           - ruby-version: "3.1"
             rails_version: "7.1.6"
     env:
-      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-coffee --skip-test"
+      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-action-cable --skip-coffee --skip-test"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby

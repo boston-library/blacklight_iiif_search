@@ -3,9 +3,6 @@
 # testing environent:
 ENV['RAILS_ENV'] ||= 'test'
 
-require 'coveralls'
-Coveralls.wear!
-
 # engine_cart:
 require 'bundler/setup'
 require 'engine_cart'
