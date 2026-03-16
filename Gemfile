@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gemspec
+gemspec path: File.expand_path('..', __FILE__)
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]

@@ -19,6 +19,7 @@ jobs:
     strategy:
       matrix:
         ruby-version: ["3.4"]
+        bundler_version: ["2.7.2"]
         rails_version: ["7.2.3", "8.0.4", "8.1.2"]
         include:
           - ruby-version: "3.1"
@@ -31,7 +32,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler: "latest"
+          bundler: ${{ matrix.bundler_version || '2.7.2' }}
       - name: Install dependencies
         run: bundle install
       - name: Run linter and tests
