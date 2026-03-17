@@ -1,10 +1,6 @@
 source 'https://rubygems.org'
 
-gemspec
-
-group :development, :test do
-  gem 'coveralls', require: false
-end
+gemspec path: File.expand_path('..', __FILE__)
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
@@ -13,7 +9,7 @@ end
 # engine_cart: 2.5.0
 # engine_cart stanza: 2.5.0
 # the below comes from engine_cart, a gem used to test this Rails engine gem in the context of a Rails app.
-file = File.expand_path('Gemfile', ENV.fetch('ENGINE_CART_DESTINATION') { ENV.fetch('RAILS_ROOT') { File.expand_path('.internal_test_app', File.dirname(__FILE__)) } })
+file = File.expand_path('Gemfile', ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path('.internal_test_app', File.dirname(__FILE__)))
 if File.exist?(file)
   begin
     eval_gemfile file
@@ -26,7 +22,7 @@ else
   if ENV['RAILS_VERSION']
     if ENV['RAILS_VERSION'] == 'edge'
       gem 'rails', github: 'rails/rails'
-      ENV['ENGINE_CART_RAILS_OPTIONS'] = '--edge'
+      ENV['ENGINE_CART_RAILS_OPTIONS'] = '--edge --skip-turbolinks'
     else
       gem 'rails', ENV['RAILS_VERSION']
     end
